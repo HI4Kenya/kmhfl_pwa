@@ -2,7 +2,7 @@ import Dashboard from "views/Dashboard/Dashboard.jsx";
 // import Notifications from "views/Notifications/Notifications.jsx";
 import Facilities from "views/Facilities/Facilities.jsx";
 // import Icons from "views/Icons/Icons.jsx";
-import Typography from "views/Typography/Typography.jsx";
+// import Typography from "views/Typography/Typography.jsx";
 // import TableList from "views/TableList/TableList.jsx";
 import Maps from "views/Maps/Maps.jsx";
 // import Upgrade from "views/Upgrade/Upgrade.jsx";
@@ -17,7 +17,7 @@ var dashRoutes = [
   },
   {
     path: "/facilities",
-    name: "Facilities",
+    name: "Registered Facilities",
     icon: "files_single-copy-04",
     component: Facilities
   },
@@ -41,12 +41,12 @@ var dashRoutes = [
   //   icon: "files_paper",
   //   component: TableList
   // },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: "design-2_ruler-pencil",
-    component: Typography
-  },
+  // {
+  //   path: "/typography",
+  //   name: "Typography",
+  //   icon: "design-2_ruler-pencil",
+  //   component: Typography
+  // },
   // {
   //   pro: true,
   //   path: "/upgrade",
