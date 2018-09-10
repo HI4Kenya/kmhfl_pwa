@@ -1,0 +1,375 @@
+{
+    "counties": [{
+            "value": 1,
+            "label": "Mombasa"
+        },
+        {
+            "value": 2,
+            "label": "Kwale"
+        },
+        {
+            "value": 3,
+            "label": "Kilifi"
+        },
+        {
+            "value": 4,
+            "label": "Tana River"
+        },
+        {
+            "value": 5,
+            "label": "Lamu"
+        },
+        {
+            "value": 6,
+            "label": "Taita-Taveta"
+        },
+        {
+            "value": 7,
+            "label": "Garissa"
+        },
+        {
+            "value": 8,
+            "label": "Wajir"
+        },
+        {
+            "value": 9,
+            "label": "Mandera"
+        },
+        {
+            "value": 10,
+            "label": "Marsabit"
+        },
+        {
+            "value": 11,
+            "label": "Isiolo"
+        },
+        {
+            "value": 12,
+            "label": "Meru"
+        },
+        {
+            "value": 13,
+            "label": "Tharaka-Nithi"
+        },
+        {
+            "value": 14,
+            "label": "Embu"
+        },
+        {
+            "value": 15,
+            "label": "Kitui"
+        },
+        {
+            "value": 16,
+            "label": "Machakos"
+        },
+        {
+            "value": 17,
+            "label": "Makueni"
+        },
+        {
+            "value": 18,
+            "label": "Nyandarua"
+        },
+        {
+            "value": 19,
+            "label": "Nyeri"
+        },
+        {
+            "value": 20,
+            "label": "Kirinyaga"
+        },
+        {
+            "value": 21,
+            "label": "Murang'a"
+        },
+        {
+            "value": 22,
+            "label": "Kiambu"
+        },
+        {
+            "value": 23,
+            "label": "Turkana"
+        },
+        {
+            "value": 24,
+            "label": "West Pokot"
+        },
+        {
+            "value": 25,
+            "label": "Samburu"
+        },
+        {
+            "value": 26,
+            "label": "Trans Nzoia"
+        },
+        {
+            "value": 27,
+            "label": "Uasin Gishu"
+        },
+        {
+            "value": 28,
+            "label": "Elgeyo-Marakwet"
+        },
+        {
+            "value": 29,
+            "label": "Nandi"
+        },
+        {
+            "value": 30,
+            "label": "Baringo"
+        },
+
+        {
+            "value": 31,
+            "label": "Laikipia"
+        },
+
+        {
+            "value": 32,
+            "label": "Nakuru"
+        },
+
+        {
+            "value": 33,
+            "label": "Narok"
+        },
+
+        {
+            "value": 34,
+            "label": "Kajiado"
+        },
+
+        {
+            "value": 35,
+            "label": "Kericho"
+        },
+
+        {
+            "value": 36,
+            "label": "Bomet"
+        },
+        {
+            "value": 37,
+            "label": "Kakamega"
+        },
+        {
+            "value": 38,
+            "label": "Vihiga"
+        },
+        {
+            "value": 39,
+            "label": "Bungoma"
+        },
+        {
+            "value": 40,
+            "label": "Busia"
+        },
+        {
+            "value": 41,
+            "label": "Siaya"
+        },
+        {
+            "value": 42,
+            "label": "Kisumu"
+        },
+        {
+            "value": 43,
+            "label": "Homa Bay"
+        },
+        {
+            "value": 44,
+            "label": "Migori"
+        },
+
+        {
+            "value": 45,    
+            "label": "Kisii"
+        },
+
+        {
+            "value": 46,
+            "label": "Nyamira"
+        },
+        {
+            "value": 47,
+            "label": "Nairobi"
+        }
+    ],
+    "subcounties_nairobi": [
+        {
+            "label": "westlands",
+            "value": 3155
+        }, {
+            "label": "dagoretti north",
+            "value": 3154
+        }, {
+            "label": "dagoretti south",
+            "value": 3153
+        }, {
+            "label": "langata",
+            "value": 3152
+        }, {
+            "label": "kibera",
+            "value": 3151
+        }, {
+            "label": "roysambu",
+            "value": 3150
+        }, {
+            "label": "kasarani",
+            "value": 3149
+        }, {
+            "label": "ruaraka",
+            "value": 3148
+        }, {
+            "label": "embakasi south",
+            "value": 3147
+        }, {
+            "label": "embakasi north",
+            "value": 3146
+        }, {
+            "label": "embakasi central",
+            "value": 3145
+        }, {
+            "label": "embakasi east",
+            "value": 3144
+        }, {
+            "label": "embakasi west",
+            "value": 3143
+        }, {
+            "label": "makadara",
+            "value": 3142
+        }, {
+            "label": "kamukunji",
+            "value": 3141
+        }, {
+            "label": "starehe",
+            "value": 3140
+        }, {
+            "label": "mathare",
+            "value": 3139
+        }
+
+    ],
+    "wards_nairobi": [{
+            "label": "KIAMAIKO",
+            "value": 1450
+        },
+        {
+            "label": "MLANGO KUBWA",
+            "value": 1449
+        },
+        {
+            "label": "NGEI",
+            "value": 1448
+        },
+        {
+            "label": "HURUMA",
+            "value": 1447
+        },
+        {
+            "label": "MABATINI",
+            "value": 1446
+        },
+        {
+            "label": "HOSPITAL",
+            "value": 1445
+        },
+        {
+            "label": "NAIROBI SOUTH",
+            "value": 1444
+        },
+        {
+            "label": "LANDIMAWE",
+            "value": 1443
+        },
+        {
+            "label": "ZIWANI/KARIOKOR",
+            "value": 1442
+        },
+        {
+            "label": "PANGANI",
+            "value": 1441
+        },
+        {
+            "label": "NGARA",
+            "value": 1440
+        },
+        {
+            "label": "NAIROBI CENTRAL",
+            "value": 1439
+        },
+        {
+            "label": "CALIFORNIA",
+            "value": 1438
+        },
+        {
+            "label": "AIRBASE",
+            "value": 1437
+        },
+        {
+            "label": "EASTLEIGH SOUTH",
+            "value": 1436
+        },
+        {
+            "label": "EASTLEIGH NORTH",
+            "value": 1435
+        },
+        {
+            "label": "PUMWANI",
+            "value": 1434
+        },
+        {
+            "label": "MAKONGENI",
+            "value": 1433
+        },
+        {
+            "label": "HARAMBEE",
+            "value": 1432
+        },
+        {
+            "label": "VIWANDANI",
+            "value": 1431
+        },
+        {
+            "label": "MARINGO/HAMZA",
+            "value": 1430
+        },
+        {
+            "label": "KARIOBANGI SOUTH",
+            "value": 1429
+        },
+        {
+            "label": "MOWLEM",
+            "value": 1428
+        },
+        {
+            "label": "UMOJA II",
+            "value": 1427
+        },
+        {
+            "label": "UMOJA I",
+            "value": 1426
+        },
+        {
+            "label": "MIHANGO",
+            "value": 1425
+        },
+        {
+            "label": "UTAWALA",
+            "value": 1424
+        },
+        {
+            "label": "EMBAKASI",
+            "value": 1423
+        },
+        {
+            "label": "LOWER SAVANNAH",
+            "value": 1422
+        },
+        {
+            "label": "UPPER SAVANNAH",
+            "value": 1421
+        }
+    ]
+}

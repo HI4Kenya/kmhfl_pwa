@@ -9,12 +9,13 @@ import {
 } from "react-google-maps";
 
 import { PanelHeader } from "components";
+const keys = require('variables/keys.json');
 
 const MapWrapper = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
       defaultZoom={13}
-      defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
+      defaultCenter={{ lat: -1.273496, lng: 36.806646 }}
       defaultOptions={{
         scrollwheel: false,
         styles: [
@@ -115,7 +116,7 @@ class FullScreenMap extends React.Component {
                     style={{ position: "relative", overflow: "hidden" }}
                   >
                     <MapWrapper
-                      googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
+                      googleMapURL={"https://maps.googleapis.com/maps/api/js?key=" + keys.mapKey}
                       loadingElement={<div style={{ height: `100%` }} />}
                       containerElement={<div style={{ height: `100%` }} />}
                       mapElement={<div style={{ height: `100%` }} />}
