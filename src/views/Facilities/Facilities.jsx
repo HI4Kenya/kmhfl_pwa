@@ -43,7 +43,7 @@ class Facilities extends React.Component {
                         value: parseInt(`${response.code}`, 10)
                     })
                 });
-                console.log(subCountyOptions);
+                this.setState({ subCountyOptions });
             })
             .catch((error) => {
                 console.log(error);
@@ -108,7 +108,6 @@ class Facilities extends React.Component {
                                     <p></p>
                                     <Col xs={12}>
                                         <Select
-                                            value={subCountyOptions}
                                             onChange={this.handleSubCountyChange}
                                             options={subCountyOptions}
                                             placeholder="Select Sub-County"
