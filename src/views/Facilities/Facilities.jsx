@@ -1,13 +1,17 @@
 import React from "react";
 import Select from "react-select";
+import axios from 'axios';
 // import SelectSearch from "react-select-search";
 // import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import { Card, CardHeader, CardBody, CardTitle, Table, Row, Col} from "reactstrap";
+import { Card, CardHeader, CardBody, CardTitle, Table, Row, Col } from "reactstrap";
 import { PanelHeader } from "components";
-import { thead, tbody } from "variables/general";
+const token = require('variables/keys.json');
+
+// import { thead, tbody } from "variables/general";
+// import accessToken from "variables/general";
 // const axios = require('axios');
-const county_options = require('variables/counties_of_Kenya.json');
+const options = require('variables/counties_of_Kenya.json');
 // const defaultOption = county_options.counties[47];
 // console.log(county_options.counties[47]);  
 
@@ -20,26 +24,69 @@ const county_options = require('variables/counties_of_Kenya.json');
 
 class Facilities extends React.Component {
     state = {
-        countyOption: null,
-        subCountyOption: null,
-        wardOption: null,
+        countyOptions: null,
+        subCountyOptions: [],
+        wardOptions: null,
+        // subcounties: [],
     }
-    handleCountyChange = (countyOption) => {
-        this.setState({ countyOption});
-        console.log(`County selected:`, countyOption);
+    //GET request used to fetch subcounties from MFL
+    componentDidMount() {
+        console.log(token.accessToken);
+        axios.get(`http://api.kmhfltest.health.go.ke/api/common/sub_counties/?fields=name,code&format=json&paging=false`, {
+            headers:
+                { "Authorization": `Bearer ${token.accessToken}` }
+        })
+            .then((response) => {
+                const subCountyOptions = response.data.results.map(response => {
+                    return ({
+                        label: `${response.name}`,
+                        value: parseInt(`${response.code}`, 10)
+                    })
+                });
+                console.log(subCountyOptions);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        
+        axios.get(`http://api.kmhfltest.health.go.ke/api/common/wards/?fields=name,code&format=json&paging=false`, {
+            headers:
+                { "Authorization": `Bearer ${token.accessToken}` }
+        })
+            .then((response) => {
+                const wardOptions = response.data.results.map(response => {
+                    return ({
+                        label: `${response.name}`,
+                        value: parseInt(`${response.code}`, 10)
+                    })
+                });
+                console.log(wardOptions);
+            })
+            .catch((error) => {
+                console.log(error);
+            })   
     }
-    handleSubCountyChange = (subCountyOption) => {
-        this.setState({ subCountyOption });
-        console.log(`Sub-County selected:`, subCountyOption);
+
+
+
+    handleCountyChange = (countyOptions) => {
+        this.setState({ countyOptions });
+        console.log(`County selected:`, countyOptions);
     }
-    handleWardChange = (wardOption) => {
-        this.setState({ wardOption });
-        console.log(`Ward selected:`, wardOption);
+    handleSubCountyChange = (subCountyOptions) => {
+        console.log(subCountyOptions);
+        this.setState({ subCountyOptions });
+        console.log(`Sub-County selected:`, subCountyOptions);
+    }
+    handleWardChange = (wardOptions) => {
+        this.setState({ wardOptions });
+        console.log(`Ward selected:`, wardOptions);
     }
     render() {
-        const { countyOption } = this.state;
-        const { subCountyOption } = this.state;
-        const { wardOption } = this.state;
+        const { countyOptions } = this.state;
+        const { subCountyOptions } = this.state;
+        console.log(subCountyOptions);
+        const { wardOptions } = this.state;
 
         return (
             <div>
@@ -50,32 +97,32 @@ class Facilities extends React.Component {
                             <Card>
                                 <CardHeader>
                                     <CardTitle tag="h4">Registered Facilities</CardTitle>
-                                        <Col xs={12}>
-                                            <Select
-                                                value={countyOption}
-                                                onChange={this.handleCountyChange}
-                                                options={county_options.counties}
-                                                placeholder="county"
-                                            />
-                                        </Col>
-                                        <p></p>
-                                        <Col xs={12}>
-                                            <Select
-                                                value={subCountyOption}
-                                                onChange={this.handleSubCountyChange}
-                                                options={county_options.subcounties_nairobi}
-                                                placeholder="Sub-County"
-                                            />
-                                        </Col>
-                                        <p></p>
-                                        <Col xs={12}>
-                                            <Select
-                                                value={wardOption}
-                                                onChange={this.handleWardChange}
-                                                options={county_options.wards_nairobi}
-                                                placeholder="Ward"
-                                            />
-                                        </Col>
+                                    <Col xs={12}>
+                                        <Select
+                                            value={countyOptions}
+                                            onChange={this.handleCountyChange}
+                                            options={options.counties}
+                                            placeholder="Select County"
+                                        />
+                                    </Col>
+                                    <p></p>
+                                    <Col xs={12}>
+                                        <Select
+                                            value={subCountyOptions}
+                                            onChange={this.handleSubCountyChange}
+                                            options={subCountyOptions}
+                                            placeholder="Select Sub-County"
+                                        />
+                                    </Col>
+                                    <p></p>
+                                    <Col xs={12}>
+                                        <Select
+                                            value={wardOptions}
+                                            onChange={this.handleWardChange}
+                                            options={options.wards_nairobi}
+                                            placeholder="Select Ward"
+                                        />
+                                    </Col>
                                 </CardHeader>
                                 <CardBody>
                                     <Table responsive>
@@ -108,6 +155,8 @@ class Facilities extends React.Component {
                                             </tr>
                                         </tbody>
                                     </Table>
+                                    <ul>
+                                    </ul>
                                 </CardBody>
                             </Card>
                         </Col>
