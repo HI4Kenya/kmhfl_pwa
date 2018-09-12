@@ -14,7 +14,7 @@ import {
   Table
 } from "reactstrap";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
+import { Line, Bar, Doughnut, Pie } from "react-chartjs-2";
 // function that returns a color based on an interval of numbers
 
 import { PanelHeader, Stats, CardCategory, Tasks } from "components";
@@ -23,6 +23,8 @@ import {
   dashboardPanelChart,
   dashboardShippedProductsChart,
   dashboardAllProductsChart,
+  facilityOwnershipChart,
+  facilityRegulatingBodiesChart,
   dashboard24HoursPerformanceChart
 } from "variables/charts.jsx";
 
@@ -35,18 +37,20 @@ class Dashboard extends React.Component {
         <PanelHeader
           size="lg"
           content={
-            <Line
-              data={dashboardPanelChart.data}
-              options={dashboardPanelChart.options}
-            />
+            <div>
+              <Line
+                data={dashboardPanelChart.data}
+                options={dashboardPanelChart.options}
+              />
+            </div>
           }
         />
         <div className="content">
           <Row>
-            <Col xs={12} md={4}>
+            {/* <Col xs={12} md={4}>
               <Card className="card-chart">
                 <CardHeader>
-                  <CardCategory>Global Sales</CardCategory>
+                  <CardCategory>Trend in new facilities</CardCategory>
                   <CardTitle tag="h4">Shipped Products</CardTitle>
                   <UncontrolledDropdown>
                     <DropdownToggle
@@ -84,8 +88,8 @@ class Dashboard extends React.Component {
                   </Stats>
                 </CardFooter>
               </Card>
-            </Col>
-            <Col xs={12} md={4}>
+            </Col> */}
+            {/* <Col xs={12} md={4}>
               <Card className="card-chart">
                 <CardHeader>
                   <CardCategory>2018 Sales</CardCategory>
@@ -126,12 +130,12 @@ class Dashboard extends React.Component {
                   </Stats>
                 </CardFooter>
               </Card>
-            </Col>
-            <Col xs={12} md={4}>
+            </Col> */}
+            <Col xs={12} md={12}>
               <Card className="card-chart">
                 <CardHeader>
-                  <CardCategory>Email Statistics</CardCategory>
-                  <CardTitle tag="h4">24 Hours Performance</CardTitle>
+                  <CardCategory>Facility Distribution</CardCategory>
+                  <CardTitle tag="h4">Number of Facilities by County</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <div className="chart-area">
@@ -148,8 +152,50 @@ class Dashboard extends React.Component {
                 </CardFooter>
               </Card>
             </Col>
+            <Col xs={12} md={6}>
+              <Card className="card-chart">
+                <CardHeader>
+                  <CardCategory>Facility Ownership</CardCategory>
+                  <CardTitle tag="h4">Number of Facilities by ownership</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <div className="chart-area">
+                    <Doughnut
+                      data={facilityOwnershipChart.data}
+                      options={facilityOwnershipChart.options}
+                    />
+                  </div>
+                </CardBody>
+                <CardFooter>
+                  <Stats>
+                    {[{ i: "now-ui-icons ui-2_time-alarm", t: "Last 7 days" }]}
+                  </Stats>
+                </CardFooter>
+              </Card>
+            </Col>
+            <Col xs={12} md={6}>
+              <Card className="card-chart">
+                <CardHeader>
+                  <CardCategory>Regulatory bodies</CardCategory>
+                  <CardTitle tag="h4">Number of Facilities by Regulator Body</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <div className="chart-area">
+                    <Bar
+                      data={facilityRegulatingBodiesChart.data}
+                      options={facilityRegulatingBodiesChart.options}
+                    />
+                  </div>
+                </CardBody>
+                <CardFooter>
+                  <Stats>
+                    {[{ i: "now-ui-icons ui-2_time-alarm", t: "Last 7 days" }]}
+                  </Stats>
+                </CardFooter>
+              </Card>
+            </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <Col xs={12} md={6}>
               <Card className="card-tasks">
                 <CardHeader>
@@ -224,7 +270,7 @@ class Dashboard extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-          </Row>
+          </Row> */}
         </div>
       </div>
     );

@@ -1,3 +1,5 @@
+const counties = require('variables/counties_of_Kenya.json');
+
 // ##############################
 // // // Function that converts a hex color number to a RGB color number
 // #############################
@@ -131,22 +133,22 @@ const dashboardPanelChart = {
 
     return {
       labels: [
-        "JAN",
-        "FEB",
-        "MAR",
-        "APR",
-        "MAY",
-        "JUN",
-        "JUL",
-        "AUG",
-        "SEP",
-        "OCT",
-        "NOV",
-        "DEC"
+        "2006",
+        "2007",
+        "2008",
+        "2009",
+        "2010",
+        "2011",
+        "2012",
+        "2013",
+        "2014",
+        "2015",
+        "2016",
+        "2017"
       ],
       datasets: [
         {
-          label: "Data",
+          label: "New Facilities",
           borderColor: chartColor,
           pointBorderColor: chartColor,
           pointBackgroundColor: "#2c2c2c",
@@ -240,18 +242,18 @@ const dashboardShippedProductsChart = {
     gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
     return {
       labels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
+        "2006",
+        "2007",
+        "2008",
+        "2009",
+        "2010",
+        "2011",
+        "2012",
+        "2013",
+        "2014",
+        "2015",
+        "2016",
+        "2017"
       ],
       datasets: [
         {
@@ -322,22 +324,22 @@ const dashboard24HoursPerformanceChart = {
     gradientFill.addColorStop(1, hexToRGB("#2CA8FF", 0.6));
     return {
       labels: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
+        "Mombasa",
+        "Kwale",
+        "Kilifi",
+        "Tana River",
+        "Lamu",
+        "Taita Taveta",
+        "Garissa",
+        "Wajir",
+        "Mandera",
+        "Marsabit",
+        "Isiolo",
+        "Meru"
       ],
       datasets: [
         {
-          label: "Active Countries",
+          label: "Active Facilities",
           backgroundColor: gradientFill,
           borderColor: "#2CA8FF",
           pointBorderColor: "#FFF",
@@ -398,9 +400,172 @@ const dashboard24HoursPerformanceChart = {
   }
 };
 
+const facilityOwnershipChart = {
+  data: canvas => {
+    var ctx = canvas.getContext("2d");
+    var gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
+    gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+    gradientFill.addColorStop(1, hexToRGB("#003366", 0.8));
+    return {
+      labels: [
+        "Private Practice",
+        "Public Institution",
+        "Non-Governmental Organization",
+        "Ministry of Health",
+        "Faith based Organization"        
+      ],
+      datasets: [
+        {
+          label: "Active Facilities",
+          backgroundColor: gradientFill,
+          borderColor: "#2CA8FF",
+          pointBorderColor: "#FFF",
+          pointBackgroundColor: "#2CA8FF",
+          pointBorderWidth: 2,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 1,
+          pointRadius: 4,
+          fill: true,
+          borderWidth: 1,
+          data: [4013, 95, 335, 5613, 1050]
+        }
+      ]
+    };
+  },
+  options: {
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
+    tooltips: {
+      bodySpacing: 4,
+      mode: "nearest",
+      intersect: 0,
+      position: "nearest",
+      xPadding: 10,
+      yPadding: 10,
+      caretPadding: 10
+    },
+    responsive: 1,
+    scales: {
+      yAxes: [
+        {
+          gridLines: {
+            zeroLineColor: "transparent",
+            drawBorder: false
+          }
+        }
+      ],
+      xAxes: [
+        {
+          display: 0,
+          ticks: {
+            display: false
+          },
+          gridLines: {
+            zeroLineColor: "transparent",
+            drawTicks: false,
+            display: false,
+            drawBorder: false
+          }
+        }
+      ]
+    },
+    layout: {
+      padding: { left: 0, right: 0, top: 15, bottom: 15 }
+    }
+  }
+};
+
+const facilityRegulatingBodiesChart = {
+  data: canvas => {
+    var ctx = canvas.getContext("2d");
+    var gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
+    gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+    gradientFill.addColorStop(1, hexToRGB("#ff0000", 0.8));
+    return {
+      labels: [
+        "Kenya Radiation Protection Board",
+        "Kenya Physiotherapy Board",
+        "Kenya Nutrition and Dietetic Institute",
+        "Other",
+        "Nursing Council of Kenya (Private Practice)",
+        "Pharmacy & Poisons Board",
+        "Kenya Medical Laboratory, Tech & Technologists Board",
+        "Clinical Officers Council",
+        "Kenya MPDB",
+        "Ministry of Health"
+      ],
+      datasets: [
+        {
+          label: "Active Facilities",
+          backgroundColor: gradientFill,
+          borderColor: "#2CA8FF",
+          pointBorderColor: "#FFF",
+          pointBackgroundColor: "#2CA8FF",
+          pointBorderWidth: 2,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 1,
+          pointRadius: 4,
+          fill: true,
+          borderWidth: 1,
+          data: [7, 1, 6, 42, 850, 43, 60, 647, 3018, 5601]
+        }
+      ]
+    };
+  },
+  options: {
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
+    tooltips: {
+      bodySpacing: 4,
+      mode: "nearest",
+      intersect: 0,
+      position: "nearest",
+      xPadding: 10,
+      yPadding: 10,
+      caretPadding: 10
+    },
+    responsive: 1,
+    scales: {
+      yAxes: [
+        {
+          gridLines: {
+            zeroLineColor: "transparent",
+            drawBorder: false
+          }
+        }
+      ],
+      xAxes: [
+        {
+          display: 0,
+          ticks: {
+            display: false
+          },
+          gridLines: {
+            zeroLineColor: "transparent",
+            drawTicks: false,
+            display: false,
+            drawBorder: false
+          }
+        }
+      ]
+    },
+    layout: {
+      padding: { left: 0, right: 0, top: 15, bottom: 15 }
+    }
+  }
+};
+
+
+
 module.exports = {
   dashboardPanelChart, // Chart for Dashboard view - Will be rendered in panel
   dashboardShippedProductsChart, // Chart for Dashboard view - Shipped Products Card
   dashboardAllProductsChart, // Chart for Dashboard view - All products Card
-  dashboard24HoursPerformanceChart // Chart for Dashboard view - 24 Hours Performance Card
+  dashboard24HoursPerformanceChart, // Chart for Dashboard view - 24 Hours Performance Card
+  facilityOwnershipChart,
+  facilityRegulatingBodiesChart
 };

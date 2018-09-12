@@ -1,6 +1,7 @@
 import React from "react";
 import Select from "react-select";
 import axios from 'axios';
+import CustomButton from "components";
 // import SelectSearch from "react-select-search";
 // import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -48,7 +49,7 @@ class Facilities extends React.Component {
             .catch((error) => {
                 console.log(error);
             })
-        
+
         axios.get(`http://api.kmhfltest.health.go.ke/api/common/wards/?fields=name,code&format=json&paging=false`, {
             headers:
                 { "Authorization": `Bearer ${token.accessToken}` }
@@ -64,7 +65,7 @@ class Facilities extends React.Component {
             })
             .catch((error) => {
                 console.log(error);
-            })   
+            })
     }
 
 
@@ -97,31 +98,36 @@ class Facilities extends React.Component {
                             <Card>
                                 <CardHeader>
                                     <CardTitle tag="h4">Registered Facilities</CardTitle>
-                                    <Col xs={12}>
-                                        <Select
-                                            value={countyOptions}
-                                            onChange={this.handleCountyChange}
-                                            options={options.counties}
-                                            placeholder="Select County"
-                                        />
-                                    </Col>
-                                    <p></p>
-                                    <Col xs={12}>
-                                        <Select
-                                            onChange={this.handleSubCountyChange}
-                                            options={subCountyOptions}
-                                            placeholder="Select Sub-County"
-                                        />
-                                    </Col>
-                                    <p></p>
-                                    <Col xs={12}>
-                                        <Select
-                                            value={wardOptions}
-                                            onChange={this.handleWardChange}
-                                            options={options.wards_nairobi}
-                                            placeholder="Select Ward"
-                                        />
-                                    </Col>
+                                    <Row>                                        
+                                        <Col xs={12} md={3}>
+                                            <Select
+                                                value={countyOptions}
+                                                onChange={this.handleCountyChange}
+                                                options={options.counties}
+                                                placeholder="Select County"
+                                            />
+                                        </Col>
+                                        <p></p>
+                                        <Col xs={12} md={3}>
+                                            <Select
+                                                onChange={this.handleSubCountyChange}
+                                                options={subCountyOptions}
+                                                placeholder="Select Sub-County"
+                                            />
+                                        </Col>
+                                        <p></p>
+                                        <Col xs={12} md={3}>
+                                            <Select
+                                                value={wardOptions}
+                                                onChange={this.handleWardChange}
+                                                options={options.wards_nairobi}
+                                                placeholder="Select Ward"
+                                            />
+                                        </Col>
+                                        <Col xs={12} md={3}>
+                                            <button>More filters</button>
+                                        </Col>
+                                    </Row>
                                 </CardHeader>
                                 <CardBody>
                                     <Table responsive>
@@ -137,20 +143,23 @@ class Facilities extends React.Component {
                                             <tr>
                                                 <td>12345</td>
                                                 <td>Kenyatta National Hospital</td>
+                                                <td>Nairobi</td>
                                                 <td>Level 6</td>
-                                                <td><button>Details</button></td>
+                                                {/* <td><button>Details</button></td> */}
                                             </tr>
                                             <tr>
                                                 <td>67891</td>
                                                 <td>Kisii General Hospital</td>
+                                                <td>Kisii</td>
                                                 <td>Level 5</td>
-                                                <td><button>Details</button></td>
+                                                {/* <td><button>Details</button></td> */}
                                             </tr>
                                             <tr>
                                                 <td>54321</td>
                                                 <td>Machakos District Hospital</td>
-                                                <td>Level 4</td>
-                                                <td><button>Details</button></td>
+                                                <td>Machakos</td>
+                                                <td>Level 5</td>
+                                                {/* <td><button>Details</button></td> */}
                                             </tr>
                                         </tbody>
                                     </Table>
