@@ -1,5 +1,6 @@
 import React from "react";
-import { Row, Col, Card, CardHeader, CardBody } from "reactstrap";
+import { Row, Col, Card, CardHeader, CardTitle, CardBody } from "reactstrap";
+import Select from "react-select";
 // react plugin used to create google maps
 import {
   withScriptjs,
@@ -100,7 +101,19 @@ const MapWrapper = withScriptjs(
 );
 
 class FullScreenMap extends React.Component {
+  state = {
+    serviceOptions: []
+    // subcounties: [],
+  }
+
+  handleServiceChange = (serviceOptions) => {
+    this.setState({ serviceOptions });
+    console.log(`Ward selected:`, serviceOptions);
+  }
+
   render() {
+    const { serviceOptions } = this.state;
+
     return (
       <div>
         <PanelHeader size="sm" />
@@ -108,7 +121,19 @@ class FullScreenMap extends React.Component {
           <Row>
             <Col xs={12}>
               <Card>
-                <CardHeader>Google Maps</CardHeader>
+                <CardHeader>
+                  <CardTitle tag="h4">Find Facility Location</CardTitle>
+                  <Row>
+                    <Col xs={12} md={3}>
+                      <Select
+                        value={serviceOptions}
+                        onChange={this.handleServiceChange}
+                        options={serviceOptions}
+                        placeholder="Select Service"
+                      />
+                    </Col>
+                  </Row>
+                </CardHeader>
                 <CardBody>
                   <div
                     id="map"

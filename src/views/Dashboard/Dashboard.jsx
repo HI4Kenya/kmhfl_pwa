@@ -7,28 +7,28 @@ import {
   CardTitle,
   Row,
   Col,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Table
+  // UncontrolledDropdown,
+  // DropdownToggle,
+  // DropdownMenu,
+  // DropdownItem,
+  // Table
 } from "reactstrap";
 // react plugin used to create charts
-import { Line, Bar, Doughnut, Pie } from "react-chartjs-2";
+import { Line, Bar, Doughnut } from "react-chartjs-2";
 // function that returns a color based on an interval of numbers
 
-import { PanelHeader, Stats, CardCategory, Tasks } from "components";
+import { PanelHeader, Stats, CardCategory } from "components";
 
 import {
   dashboardPanelChart,
-  dashboardShippedProductsChart,
-  dashboardAllProductsChart,
+  // dashboardShippedProductsChart,
+  // dashboardAllProductsChart,
   facilityOwnershipChart,
   facilityRegulatingBodiesChart,
   dashboard24HoursPerformanceChart
 } from "variables/charts.jsx";
 
-import { tasks } from "variables/general.jsx";
+// import { tasks } from "variables/general.jsx";
 
 class Dashboard extends React.Component {
   render() {

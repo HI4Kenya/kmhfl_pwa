@@ -1,73 +1,83 @@
 import React from "react";
 import Select from "react-select";
-import axios from 'axios';
-import CustomButton from "components";
-// import SelectSearch from "react-select-search";
-// import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import axios from "axios";
 import { Card, CardHeader, CardBody, CardTitle, Table, Row, Col } from "reactstrap";
 import { PanelHeader } from "components";
+// const fetchData = require("../../api");
 const token = require('variables/keys.json');
 
-// import { thead, tbody } from "variables/general";
-// import accessToken from "variables/general";
-// const axios = require('axios');
+
 const options = require('variables/counties_of_Kenya.json');
-// const defaultOption = county_options.counties[47];
-// console.log(county_options.counties[47]);  
-
-
-// const options = [
-//     'one', 'two', 'three'
-// ];
-
+const baseURL = "http://api.kmhfltest.health.go.ke";
+const subCountyEndPoint = "common/sub_counties";
 
 
 class Facilities extends React.Component {
-    state = {
-        countyOptions: null,
-        subCountyOptions: [],
-        wardOptions: null,
-        // subcounties: [],
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            countyOptions: null,
+            subCountyOptions: [],
+            wardOptions: [],
+            serviceOptions: []
+        }
     }
-    //GET request used to fetch subcounties from MFL
+
     componentDidMount() {
-        console.log(token.accessToken);
-        axios.get(`http://api.kmhfltest.health.go.ke/api/common/sub_counties/?fields=name,code&format=json&paging=false`, {
+        //get  subcounty options
+        axios.get(`${baseURL}/api/${subCountyEndPoint}/?fields=name,code&format=json&page_size=300`, {
             headers:
-                { "Authorization": `Bearer ${token.accessToken}` }
+                { Authorization: `Bearer ${token.accessToken}` }
+        }).then((response) => {
+            const subCountyOptions = response.data.results.map(response => {
+                return ({
+                    label: `${response.name}`,
+                    value: parseInt(`${response.code}`, 10)
+                })
+            });
+            console.log(subCountyOptions);
+            this.setState({ subCountyOptions });
         })
-            .then((response) => {
-                const subCountyOptions = response.data.results.map(response => {
-                    return ({
-                        label: `${response.name}`,
-                        value: parseInt(`${response.code}`, 10)
-                    })
-                });
-                this.setState({ subCountyOptions });
-            })
             .catch((error) => {
                 console.log(error);
             })
-
-        axios.get(`http://api.kmhfltest.health.go.ke/api/common/wards/?fields=name,code&format=json&paging=false`, {
+        //get  ward options
+        axios.get(`${baseURL}/api/common/wards/?fields=name,code&format=json&page_size=1600`, {
             headers:
-                { "Authorization": `Bearer ${token.accessToken}` }
+                { Authorization: `Bearer ${token.accessToken}` }
+        }).then((response) => {
+            const wardOptions = response.data.results.map(response => {
+                return ({
+                    label: `${response.name}`,
+                    value: parseInt(`${response.code}`, 10)
+                })
+            });
+            console.log(wardOptions);
+            this.setState({ wardOptions });
         })
-            .then((response) => {
-                const wardOptions = response.data.results.map(response => {
-                    return ({
-                        label: `${response.name}`,
-                        value: parseInt(`${response.code}`, 10)
-                    })
-                });
-                console.log(wardOptions);
+            .catch((error) => {
+                console.log(error);
             })
+        //get services options
+        axios.get(`${baseURL}/api/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
+            headers:
+                { Authorization: `Bearer ${token.accessToken}` }
+        }).then((response) => {
+            const serviceOptions = response.data.results.map(response => {
+                return ({
+                    label: `${response.name}`,
+                    value: `${response.id}`
+                })
+            });
+            console.log(serviceOptions);
+            this.setState({ serviceOptions });
+        })
             .catch((error) => {
                 console.log(error);
             })
     }
-
 
 
     handleCountyChange = (countyOptions) => {
@@ -83,11 +93,17 @@ class Facilities extends React.Component {
         this.setState({ wardOptions });
         console.log(`Ward selected:`, wardOptions);
     }
+    handleServiceChange = (serviceOptions) => {
+        this.setState({ serviceOptions });
+        console.log(`Ward selected:`, serviceOptions);
+    }
+
+
     render() {
         const { countyOptions } = this.state;
         const { subCountyOptions } = this.state;
-        console.log(subCountyOptions);
         const { wardOptions } = this.state;
+        const { serviceOptions } = this.state;
 
         return (
             <div>
@@ -98,7 +114,7 @@ class Facilities extends React.Component {
                             <Card>
                                 <CardHeader>
                                     <CardTitle tag="h4">Registered Facilities</CardTitle>
-                                    <Row>                                        
+                                    <Row>
                                         <Col xs={12} md={3}>
                                             <Select
                                                 value={countyOptions}
@@ -118,14 +134,17 @@ class Facilities extends React.Component {
                                         <p></p>
                                         <Col xs={12} md={3}>
                                             <Select
-                                                value={wardOptions}
                                                 onChange={this.handleWardChange}
-                                                options={options.wards_nairobi}
+                                                options={wardOptions}
                                                 placeholder="Select Ward"
                                             />
                                         </Col>
                                         <Col xs={12} md={3}>
-                                            <button>More filters</button>
+                                            <Select
+                                                onChange={this.handleServiceChange}
+                                                options={serviceOptions}
+                                                placeholder="Select Service"
+                                            />
                                         </Col>
                                     </Row>
                                 </CardHeader>

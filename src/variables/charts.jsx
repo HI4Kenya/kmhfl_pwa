@@ -1,5 +1,3 @@
-const counties = require('variables/counties_of_Kenya.json');
-
 // ##############################
 // // // Function that converts a hex color number to a RGB color number
 // #############################
