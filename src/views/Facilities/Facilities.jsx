@@ -4,6 +4,9 @@ import 'react-dropdown/style.css';
 import axios from "axios";
 import { Card, CardHeader, CardBody, CardTitle, Table, Row, Col } from "reactstrap";
 import { PanelHeader } from "components";
+import ReactTable from "react-table";
+import 'react-table/react-table.css'
+
 // const fetchData = require("../../api");
 const token = require('variables/keys.json');
 
@@ -21,20 +24,22 @@ class Facilities extends React.Component {
             countyOptions: null,
             subCountyOptions: [],
             wardOptions: [],
-            serviceOptions: []
+            serviceOptions: [],
+            tableData: []
         }
     }
 
     componentDidMount() {
         //get  subcounty options
-        axios.get(`${baseURL}/api/${subCountyEndPoint}/?fields=name,code&format=json&page_size=300`, {
+        axios.get(`${baseURL}/api/${subCountyEndPoint}/?fields=name,code,id&format=json&page_size=300`, {
             headers:
                 { Authorization: `Bearer ${token.accessToken}` }
         }).then((response) => {
             const subCountyOptions = response.data.results.map(response => {
                 return ({
                     label: `${response.name}`,
-                    value: parseInt(`${response.code}`, 10)
+                    value: parseInt(`${response.code}`, 10),
+                    id: `${response.id}`
                 })
             });
             console.log(subCountyOptions);
@@ -77,8 +82,13 @@ class Facilities extends React.Component {
             .catch((error) => {
                 console.log(error);
             })
+        //get search results
+
     }
 
+    handleFilterChange = (tableData) => {
+        this.setState({ tableData });
+    }
 
     handleCountyChange = (countyOptions) => {
         this.setState({ countyOptions });
@@ -104,7 +114,7 @@ class Facilities extends React.Component {
         const { subCountyOptions } = this.state;
         const { wardOptions } = this.state;
         const { serviceOptions } = this.state;
-
+        const { tableData } = this.setState;
         return (
             <div>
                 <PanelHeader size="sm" />
@@ -141,6 +151,7 @@ class Facilities extends React.Component {
                                         </Col>
                                         <Col xs={12} md={3}>
                                             <Select
+                                                isDIsabled={true}
                                                 onChange={this.handleServiceChange}
                                                 options={serviceOptions}
                                                 placeholder="Select Service"
@@ -149,41 +160,41 @@ class Facilities extends React.Component {
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
-                                    <Table responsive>
-                                        <thead>
-                                            <tr>
-                                                <th>Code</th>
-                                                <th>Facility Name</th>
-                                                <th>County</th>
-                                                <th>KEPH Level</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>12345</td>
-                                                <td>Kenyatta National Hospital</td>
-                                                <td>Nairobi</td>
-                                                <td>Level 6</td>
-                                                {/* <td><button>Details</button></td> */}
-                                            </tr>
-                                            <tr>
-                                                <td>67891</td>
-                                                <td>Kisii General Hospital</td>
-                                                <td>Kisii</td>
-                                                <td>Level 5</td>
-                                                {/* <td><button>Details</button></td> */}
-                                            </tr>
-                                            <tr>
-                                                <td>54321</td>
-                                                <td>Machakos District Hospital</td>
-                                                <td>Machakos</td>
-                                                <td>Level 5</td>
-                                                {/* <td><button>Details</button></td> */}
-                                            </tr>
-                                        </tbody>
-                                    </Table>
-                                    <ul>
-                                    </ul>
+                                    <ReactTable                                        
+                                        onFetchData={(state, instance) => {
+                                            const selectedSubCounty = "70d7bb84-cee4-411a-800e-d134bded1234";
+                                            this.setState({ loading: true })
+                                            axios.get(`${baseURL}/api/facilities/facilities/?sub_county=${selectedSubCounty}&fields=official_name,county_name,facility_type_name&format=json&page_size=12000`, {
+                                                headers:
+                                                    { Authorization: `Bearer ${token.accessToken}` }
+                                            }).then((response) => {
+                                                const tableData = response.data.results.map(response => {
+                                                    return ({
+                                                        facilityName: `${response.official_name}`,
+                                                        location: `${response.county_name}`,
+                                                        type: `${response.facility_type_name}`
+                                                    })
+                                                });
+                                                console.log(tableData);
+                                                this.setState({ tableData });
+                                            })
+                                                .catch((error) => {
+                                                    console.log(error);
+                                                })
+                                        }}
+                                        data={this.state.tableData}
+                                        columns={[{
+                                            Header: 'Facility Name',
+                                            accessor: 'facilityName' // String-based value accessors!
+                                        }, {
+                                            Header: 'Location',
+                                            accessor: 'location',
+                                        }, {
+                                            Header: 'Type',
+                                            accessor: 'type'
+                                        }
+                                        ]}
+                                    />
                                 </CardBody>
                             </Card>
                         </Col>
