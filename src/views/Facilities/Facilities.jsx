@@ -2,10 +2,11 @@ import React from "react";
 import Select from "react-select";
 import 'react-dropdown/style.css';
 import axios from "axios";
-import { Card, CardHeader, CardBody, CardTitle, Table, Row, Col } from "reactstrap";
+import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import { PanelHeader } from "components";
 import ReactTable from "react-table";
-import 'react-table/react-table.css'
+import 'react-table/react-table.css';
+// import fetchedToken from "variables/authToken";
 
 // const fetchData = require("../../api");
 const token = require('variables/keys.json');
@@ -95,7 +96,6 @@ class Facilities extends React.Component {
         console.log(`County selected:`, countyOptions);
     }
     handleSubCountyChange = (subCountyOptions) => {
-        console.log(subCountyOptions);
         this.setState({ subCountyOptions });
         console.log(`Sub-County selected:`, subCountyOptions);
     }
@@ -114,7 +114,7 @@ class Facilities extends React.Component {
         const { subCountyOptions } = this.state;
         const { wardOptions } = this.state;
         const { serviceOptions } = this.state;
-        const { tableData } = this.setState;
+        // const { tableData } = this.setState;
         return (
             <div>
                 <PanelHeader size="sm" />
@@ -162,7 +162,9 @@ class Facilities extends React.Component {
                                 <CardBody>
                                     <ReactTable                                        
                                         onFetchData={(state, instance) => {
-                                            const selectedSubCounty = "70d7bb84-cee4-411a-800e-d134bded1234";
+                                            const selectedSubCounty = this.state.subCountyOptions.id;
+                                            console.log(selectedSubCounty);
+                                            // const selectedCounty = this.state.countyOptions;
                                             this.setState({ loading: true })
                                             axios.get(`${baseURL}/api/facilities/facilities/?sub_county=${selectedSubCounty}&fields=official_name,county_name,facility_type_name&format=json&page_size=12000`, {
                                                 headers:
