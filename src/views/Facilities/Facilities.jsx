@@ -26,7 +26,8 @@ class Facilities extends React.Component {
             subCountyOptions: [],
             wardOptions: [],
             serviceOptions: [],
-            tableData: []
+            tableData: [],
+            selectedSubCounty: {}
         }
     }
 
@@ -162,11 +163,12 @@ class Facilities extends React.Component {
                                 <CardBody>
                                     <ReactTable                                        
                                         onFetchData={(state, instance) => {
-                                            const selectedSubCounty = this.state.subCountyOptions.id;
-                                            console.log(selectedSubCounty);
+                                            const selectedSubCounty = "11078f9b-d786-42fb-a8b1-fb62a875ba26";
+                                            // this.setState({selectedSubCounty:this.state.subCountyOptions.id});
+                                            // console.log(selectedSubCounty);
                                             // const selectedCounty = this.state.countyOptions;
                                             this.setState({ loading: true })
-                                            axios.get(`${baseURL}/api/facilities/facilities/?sub_county=${selectedSubCounty}&fields=official_name,county_name,facility_type_name&format=json&page_size=12000`, {
+                                            axios.get(`${baseURL}/api/facilities/facilities/?sub_county=11078f9b-d786-42fb-a8b1-fb62a875ba26&fields=official_name,county_name,facility_type_name&format=json&page_size=12000`, {
                                                 headers:
                                                     { Authorization: `Bearer ${token.accessToken}` }
                                             }).then((response) => {
