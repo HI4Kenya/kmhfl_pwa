@@ -27,11 +27,30 @@ class Facilities extends React.Component {
     }
 
     componentDidMount() {
-        //get sub county options
-
-        //get ward options
-
         //get service options
+        axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
+            headers: {
+                Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
+            }
+        }).then((response) => {
+            const serviceData = response.data.results.map(response => {
+                return ({
+                    label: `${response.name}`,
+                    value: `${response.id}`,
+                })
+            });
+            console.log(serviceData);
+            this.setState({ serviceOptions: serviceData });
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    handleServiceChange = (selectedService) => {
+        this.setState({
+            selectedService
+        });
+        console.log(`Service selected:`, selectedService);
     }
 
     handleCountyChange = (selectedCounty) => {
@@ -64,7 +83,10 @@ class Facilities extends React.Component {
         this.setState({
             selectedSubCounty
         });
+        const selectedService = this.state.selectedService;
+        console.log(selectedService);
         console.log(`Sub County selected:`, selectedSubCounty);
+
 
         // get wards in selected sub county
         axios.get(`${baseURL}/common/wards/?sub_county=${selectedSubCounty.value}&fields=name,id,code&format=json&page_size=300`, {
@@ -86,7 +108,7 @@ class Facilities extends React.Component {
         })
 
         // get facilities in sub county
-        axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&fields=official_name,sub_county_name,facility_type_name&format=json&page_size=100`, {
+        axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category=${selectedService.value}&fields=official_name,sub_county_name,facility_type_name&format=json&page_size=100`, {
             headers: {
                 Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
             }
@@ -109,10 +131,12 @@ class Facilities extends React.Component {
         this.setState({
             selectedWard
         });
+        const selectedService = this.state.selectedService;
+        console.log(selectedService);
         console.log(`Ward selected:`, selectedWard);
 
         // get facilities in ward
-        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&fields=official_name,ward_name,facility_type_name&format=json&page_size=100`, {
+        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=official_name,ward_name,facility_type_name&format=json&page_size=100`, {
             headers: {
                 Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
             }
@@ -131,31 +155,7 @@ class Facilities extends React.Component {
         })
     }
 
-    handleServiceChange = (selectedService) => {
-        this.setState({
-            selectedService
-        });
-        console.log(`Service selected:`, selectedService);
-
-        // get services
-        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedService.value}&fields=official_name,ward_name,facility_type_name&format=json&page_size=100`, {
-            headers: {
-                Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
-            }
-        }).then((response) => {
-            const facilityData = response.data.results.map(response => {
-                return ({
-                    facilityName: `${response.official_name}`,
-                    location: `${response.ward_name}`,
-                    type: `${response.facility_type_name}`
-                })
-            });
-            console.log(facilityData);
-            this.setState({ facilities: facilityData });
-        }).catch((error) => {
-            console.log(error);
-        })
-    }
+    
 
     render() {
         const { selectedCounty } = this.state;
@@ -177,6 +177,15 @@ class Facilities extends React.Component {
                                 <CardHeader>
                                     <CardTitle tag="h4">Registered Facilities</CardTitle>
                                     <Row>
+                                        <Col xs={12} md={3}>
+                                            {/* service options dropdown */}
+                                            <Select
+                                                value={selectedService}
+                                                options={serviceOptions}
+                                                onChange={this.handleServiceChange}
+                                                placeholder="Service"
+                                            />
+                                        </Col>
                                         <Col xs={12} md={3}>
                                             {/* county options dropdown */}
                                             <Select
@@ -204,15 +213,7 @@ class Facilities extends React.Component {
                                                 placeholder="Ward"
                                             />
                                         </Col>
-                                        <Col xs={12} md={3}>
-                                            {/* service options dropdown */}
-                                            <Select
-                                                value={selectedService}
-                                                options={serviceOptions}
-                                                onChange={this.handleServiceChange}
-                                                placeholder="Service"
-                                            />
-                                        </Col>
+
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
@@ -221,13 +222,14 @@ class Facilities extends React.Component {
                                         data={facilities}
                                         columns={[{
                                             Header: 'Facility Name',
-                                            accessor: 'facilityName' // String-based value accessors!
+                                            accessor: 'facilityName' 
+                                        }, {
+                                            Header: 'Facility Type',
+                                            accessor: 'type'
+
                                         }, {
                                             Header: 'Location',
                                             accessor: 'location',
-                                        }, {
-                                            Header: 'Type',
-                                            accessor: 'type'
                                         }
                                         ]}
                                     />
