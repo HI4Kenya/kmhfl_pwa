@@ -1,5 +1,9 @@
 import React from "react";
-import { Row, Col, Card, CardHeader, CardBody } from "reactstrap";
+import { Row, Col, Card, CardHeader, CardTitle, CardBody } from "reactstrap";
+import Select from "react-select";
+import axios from "axios";
+
+
 // react plugin used to create google maps
 import {
   withScriptjs,
@@ -9,12 +13,15 @@ import {
 } from "react-google-maps";
 
 import { PanelHeader } from "components";
+const keys = require('variables/keys.json');
+const baseURL = "http://api.kmhfltest.health.go.ke/api";
+
 
 const MapWrapper = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
       defaultZoom={13}
-      defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
+      defaultCenter={{ lat: -1.273496, lng: 36.806646 }}
       defaultOptions={{
         scrollwheel: false,
         styles: [
@@ -93,13 +100,53 @@ const MapWrapper = withScriptjs(
         ]
       }}
     >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
+      <Marker position={{ lat: -1.273496, lng: 36.806646}} />
     </GoogleMap>
   ))
 );
 
 class FullScreenMap extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedService: undefined,
+      serviceOptions: [],
+    };
+  }
+
+  componentDidMount() {
+    //get service options
+    axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
+      headers: {
+        Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
+      }
+    }).then((response) => {
+      const serviceData = response.data.results.map(response => {
+        return ({
+          label: `${response.name}`,
+          value: `${response.id}`,
+        })
+      });
+      console.log(serviceData);
+      this.setState({ serviceOptions: serviceData });
+    }).catch((error) => {
+      console.log(error);
+    })
+    
+    //get facility coordinates
+  }
+
+  handleServiceChange = (selectedService) => {
+    this.setState({
+      selectedService
+    });
+    console.log(`Service selected:`, selectedService);
+  }
+
   render() {
+    const { selectedService } = this.state;
+    const { serviceOptions } = this.state;
+
     return (
       <div>
         <PanelHeader size="sm" />
@@ -107,7 +154,20 @@ class FullScreenMap extends React.Component {
           <Row>
             <Col xs={12}>
               <Card>
-                <CardHeader>Google Maps</CardHeader>
+                <CardHeader>
+                  <CardTitle tag="h4">Find Facility Location</CardTitle>
+                  <Row>
+                    <Col xs={12} md={3}>
+                      {/* service options dropdown */}
+                      <Select
+                        value={selectedService}
+                        options={serviceOptions}
+                        onChange={this.handleServiceChange}
+                        placeholder="Service"
+                      />
+                    </Col>
+                  </Row>
+                </CardHeader>
                 <CardBody>
                   <div
                     id="map"
@@ -115,7 +175,7 @@ class FullScreenMap extends React.Component {
                     style={{ position: "relative", overflow: "hidden" }}
                   >
                     <MapWrapper
-                      googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
+                      googleMapURL={"https://maps.googleapis.com/maps/api/js?key=" + keys.mapKey}
                       loadingElement={<div style={{ height: `100%` }} />}
                       containerElement={<div style={{ height: `100%` }} />}
                       mapElement={<div style={{ height: `100%` }} />}
