@@ -1,6 +1,9 @@
 import React from "react";
 import { Row, Col, Card, CardHeader, CardTitle, CardBody } from "reactstrap";
 import Select from "react-select";
+import axios from "axios";
+
+
 // react plugin used to create google maps
 import {
   withScriptjs,
@@ -11,6 +14,8 @@ import {
 
 import { PanelHeader } from "components";
 const keys = require('variables/keys.json');
+const baseURL = "http://api.kmhfltest.health.go.ke/api";
+
 
 const MapWrapper = withScriptjs(
   withGoogleMap(props => (
@@ -95,23 +100,51 @@ const MapWrapper = withScriptjs(
         ]
       }}
     >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
+      <Marker position={{ lat: -1.273496, lng: 36.806646}} />
     </GoogleMap>
   ))
 );
 
 class FullScreenMap extends React.Component {
-  state = {
-    serviceOptions: []
-    // subcounties: [],
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedService: undefined,
+      serviceOptions: [],
+    };
   }
 
-  handleServiceChange = (serviceOptions) => {
-    this.setState({ serviceOptions });
-    console.log(`Ward selected:`, serviceOptions);
+  componentDidMount() {
+    //get service options
+    axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
+      headers: {
+        Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
+      }
+    }).then((response) => {
+      const serviceData = response.data.results.map(response => {
+        return ({
+          label: `${response.name}`,
+          value: `${response.id}`,
+        })
+      });
+      console.log(serviceData);
+      this.setState({ serviceOptions: serviceData });
+    }).catch((error) => {
+      console.log(error);
+    })
+    
+    //get facility coordinates
+  }
+
+  handleServiceChange = (selectedService) => {
+    this.setState({
+      selectedService
+    });
+    console.log(`Service selected:`, selectedService);
   }
 
   render() {
+    const { selectedService } = this.state;
     const { serviceOptions } = this.state;
 
     return (
@@ -125,11 +158,12 @@ class FullScreenMap extends React.Component {
                   <CardTitle tag="h4">Find Facility Location</CardTitle>
                   <Row>
                     <Col xs={12} md={3}>
+                      {/* service options dropdown */}
                       <Select
-                        value={serviceOptions}
-                        onChange={this.handleServiceChange}
+                        value={selectedService}
                         options={serviceOptions}
-                        placeholder="Select Service"
+                        onChange={this.handleServiceChange}
+                        placeholder="Service"
                       />
                     </Col>
                   </Row>

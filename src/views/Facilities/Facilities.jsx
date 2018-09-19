@@ -18,7 +18,7 @@ class Facilities extends React.Component {
             selectedCounty: undefined,
             selectedSubCounty: undefined,
             selectedWard: undefined,
-            selectedService: undefined,
+            selectedService: "",
             subCountyOptions: [],
             wardOptions: [],
             serviceOptions: [],
@@ -108,16 +108,20 @@ class Facilities extends React.Component {
         })
 
         // get facilities in sub county
-        axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category=${selectedService.value}&fields=official_name,sub_county_name,facility_type_name&format=json&page_size=100`, {
+        axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category=${selectedService.value}&fields=code,official_name,sub_county_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
             headers: {
                 Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
             }
         }).then((response) => {
             const facilityData = response.data.results.map(response => {
                 return ({
-                    facilityName: `${response.official_name}`,
+                    code: `${response.code}`,
+                    facilityName: <a className="title" href="">{response.official_name}</a>,
                     location: `${response.sub_county_name}`,
-                    type: `${response.facility_type_name}`
+                    type: `${response.facility_type_parent}`,
+                    status: `${response.operation_status_name}`,
+                    beds: `${response.number_of_beds}`,
+                    cots: `${response.number_of_cots}`,
                 })
             });
             console.log(facilityData);
@@ -136,16 +140,20 @@ class Facilities extends React.Component {
         console.log(`Ward selected:`, selectedWard);
 
         // get facilities in ward
-        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=official_name,ward_name,facility_type_name&format=json&page_size=100`, {
+        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=official_name,ward_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
             headers: {
                 Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
             }
         }).then((response) => {
             const facilityData = response.data.results.map(response => {
                 return ({
-                    facilityName: `${response.official_name}`,
+                    code: `${response.code}`,
+                    facilityName: <a className="title" href="">{response.official_name}</a>,
                     location: `${response.ward_name}`,
-                    type: `${response.facility_type_name}`
+                    type: `${response.facility_type_parent}`,
+                    status: `${response.operation_status_name}`,
+                    beds: `${response.number_of_beds}`,
+                    cots: `${response.number_of_cots}`
                 })
             });
             console.log(facilityData);
@@ -155,7 +163,7 @@ class Facilities extends React.Component {
         })
     }
 
-    
+
 
     render() {
         const { selectedCounty } = this.state;
@@ -213,7 +221,6 @@ class Facilities extends React.Component {
                                                 placeholder="Ward"
                                             />
                                         </Col>
-
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
@@ -221,15 +228,24 @@ class Facilities extends React.Component {
                                     <ReactTable
                                         data={facilities}
                                         columns={[{
+                                            Header: 'Code',
+                                            accessor: 'code'
+                                        }, {
                                             Header: 'Facility Name',
-                                            accessor: 'facilityName' 
+                                            accessor: 'facilityName'
                                         }, {
                                             Header: 'Facility Type',
                                             accessor: 'type'
 
                                         }, {
-                                            Header: 'Location',
-                                            accessor: 'location',
+                                            Header: 'Operation Status',
+                                            accessor: 'status',
+                                        }, {
+                                            Header: 'Number of Beds',
+                                            accessor: 'beds',
+                                        }, {
+                                            Header: 'Number of Cots',
+                                            accessor: 'cots',
                                         }
                                         ]}
                                     />
