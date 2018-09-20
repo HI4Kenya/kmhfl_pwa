@@ -1,9 +1,9 @@
 {
-  "name": "kmhfl-pwa",
+  "name": "kmhfl-progressivewebapp",
   "version": "1.1.0",
   "private": true,
   "main": "dist/index.js",
-   "dependencies": {
+  "dependencies": {
     "@types/googlemaps": "3.30.12",
     "@types/markerclustererplus": "2.1.33",
     "@types/react": "16.4.12",
