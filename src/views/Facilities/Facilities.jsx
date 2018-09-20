@@ -15,9 +15,9 @@ class Facilities extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedCounty: undefined,
-            selectedSubCounty: undefined,
-            selectedWard: undefined,
+            selectedCounty: "",
+            selectedSubCounty: "",
+            selectedWard: "",
             selectedService: "",
             subCountyOptions: [],
             wardOptions: [],
@@ -30,7 +30,7 @@ class Facilities extends React.Component {
         //get service options
         axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
+                Authorization: `Bearer myO54i4c2SwqhQGVPC6tDKvlfX3N4m`
             }
         }).then((response) => {
             const serviceData = response.data.results.map(response => {
@@ -62,7 +62,7 @@ class Facilities extends React.Component {
         // get sub counties in selected county
         axios.get(`${baseURL}/common/sub_counties/?county=${selectedCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
+                Authorization: `Bearer myO54i4c2SwqhQGVPC6tDKvlfX3N4m`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -91,7 +91,7 @@ class Facilities extends React.Component {
         // get wards in selected sub county
         axios.get(`${baseURL}/common/wards/?sub_county=${selectedSubCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
+                Authorization: `Bearer myO54i4c2SwqhQGVPC6tDKvlfX3N4m`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -110,7 +110,7 @@ class Facilities extends React.Component {
         // get facilities in sub county
         axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category=${selectedService.value}&fields=code,official_name,sub_county_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
+                Authorization: `Bearer myO54i4c2SwqhQGVPC6tDKvlfX3N4m`
             }
         }).then((response) => {
             const facilityData = response.data.results.map(response => {
@@ -142,7 +142,7 @@ class Facilities extends React.Component {
         // get facilities in ward
         axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=official_name,ward_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer 3SInl9x9QjncfXWbom7XnOuOZwwHhz`
+                Authorization: `Bearer myO54i4c2SwqhQGVPC6tDKvlfX3N4m`
             }
         }).then((response) => {
             const facilityData = response.data.results.map(response => {
@@ -162,8 +162,6 @@ class Facilities extends React.Component {
             console.log(error);
         })
     }
-
-
 
     render() {
         const { selectedCounty } = this.state;
