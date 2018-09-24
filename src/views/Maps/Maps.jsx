@@ -1,134 +1,74 @@
-import React from "react";
-import { Row, Col, Card, CardHeader, CardBody } from "reactstrap";
-// react plugin used to create google maps
+import React, { Component } from "react"
+import { compose } from "recompose"
 import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  Marker
-} from "react-google-maps";
+  Marker,
+  InfoWindow
+} from "react-google-maps"
+// const fetchData = require("../../api");
+const token = require('variables/keys.json');
+const options = require('variables/counties_of_Kenya.json');
+const baseURL = "http://api.kmhfltest.health.go.ke";
+const FacilityEndPoint = "facilities/facilities";
 
-import { PanelHeader } from "components";
-
-const MapWrapper = withScriptjs(
-  withGoogleMap(props => (
-    <GoogleMap
-      defaultZoom={3}
-      defaultCenter={{ lat: -1.2833 , lng: -36.8167 }}
-      defaultOptions={{
-        scrollwheel: false,
-        styles: [
-          {
-            featureType: "water",
-            elementType: "geometry",
-            stylers: [{ color: "#e9e9e9" }, { lightness: 17 }]
-          },
-          {
-            featureType: "landscape",
-            elementType: "geometry",
-            stylers: [{ color: "#f5f5f5" }, { lightness: 20 }]
-          },
-          {
-            featureType: "road.highway",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#ffffff" }, { lightness: 17 }]
-          },
-          {
-            featureType: "road.highway",
-            elementType: "geometry.stroke",
-            stylers: [{ color: "#ffffff" }, { lightness: 29 }, { weight: 0.2 }]
-          },
-          {
-            featureType: "road.arterial",
-            elementType: "geometry",
-            stylers: [{ color: "#ffffff" }, { lightness: 18 }]
-          },
-          {
-            featureType: "road.local",
-            elementType: "geometry",
-            stylers: [{ color: "#ffffff" }, { lightness: 16 }]
-          },
-          {
-            featureType: "poi",
-            elementType: "geometry",
-            stylers: [{ color: "#f5f5f5" }, { lightness: 21 }]
-          },
-          {
-            featureType: "poi.park",
-            elementType: "geometry",
-            stylers: [{ color: "#dedede" }, { lightness: 21 }]
-          },
-          {
-            elementType: "labels.text.stroke",
-            stylers: [
-              { visibility: "on" },
-              { color: "#ffffff" },
-              { lightness: 16 }
-            ]
-          },
-          {
-            elementType: "labels.text.fill",
-            stylers: [
-              { saturation: 36 },
-              { color: "#333333" },
-              { lightness: 40 }
-            ]
-          },
-          { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
-          {
-            featureType: "transit",
-            elementType: "geometry",
-            stylers: [{ color: "#f2f2f2" }, { lightness: 19 }]
-          },
-          {
-            featureType: "administrative",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#fefefe" }, { lightness: 20 }]
-          },
-          {
-            featureType: "administrative",
-            elementType: "geometry.stroke",
-            stylers: [{ color: "#fefefe" }, { lightness: 17 }, { weight: 1.2 }]
-          }
-        ]
-      }}
-    >
-      <Marker position={{ lat:-1.2833 , lng: 36.8167 }} />
+const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
+return (
+    <GoogleMap defaultZoom={8} defaultCenter={{ lat: 29.5, lng: -95 }}>
+      {props.markers.map(marker => {
+        const onClick = props.onClick.bind(this, marker)
+        return (
+          <Marker
+            key={marker.id}
+            onClick={onClick}
+            position={{ lat: marker.lat_long[0], lng: marker.lat_long[1] }}
+          >
+            {props.selectedMarker === marker &&
+              <InfoWindow>
+                <div>
+                  {marker.facility}
+                </div>
+              </InfoWindow>}
+            }
+          </Marker>
+        )
+      })}
     </GoogleMap>
-  ))
-);
+  )
+})
 
-class FullScreenMap extends React.Component {
-  render() {
-    return (
-      <div>
-        <PanelHeader size="sm" />
-        <div className="content">
-          <Row>
-            <Col xs={12}>
-              <Card>
-                <CardHeader>Google Maps</CardHeader>
-                <CardBody>
-                  <div
-                    id="map"
-                    className="map"
-                    style={{ position: "relative", overflow: "hidden" }}
-                  >
-                    <MapWrapper
-                      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEffZ-EeQyeQswTAOusUBJZTyDFxfOzi0"
-                      loadingElement={<div style={{ height: `100%` }} />}
-                      containerElement={<div style={{ height: `100%` }} />}
-                      mapElement={<div style={{ height: `100%` }} />}
-                    />
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </div>
-      </div>
-    );
+export default class FacilityMap extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      facilities: [],
+      selectedMarker: false
   }
 }
+componentDidMount(){
+     fetch(`${baseURL}/api/${FacilityEndPoint}/?fields=lat_long&format=json&limit=300`,{
+     headers:
+     { Authorization: `Bearer ${token.accessToken}` }})
+   .then((response)=> {console.log(response);
+    })
+  }
 
-export default FullScreenMap;
+handleClick = (marker, event) => {
+    console.log({ marker })
+    this.setState({ selectedMarker: marker })
+}
+render(){
+    return (
+      <MapWithAMarker
+        selectedMarker={this.state.selectedMarker}
+        markers={this.state.facilities}
+        onClick={this.handleClick}
+        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEffZ-EeQyeQswTAOusUBJZTyDFxfOzi0"
+        loadingElement={<div style={{ height: `100%` }} />}
+        containerElement={<div style={{ height: `400px` }} />}
+        mapElement={<div style={{ height: `100%` }} />}
+      />
+    )
+  }
+}

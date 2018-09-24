@@ -51,7 +51,11 @@ const tbody = [
   }
 ];
 
+const accessToken = "a5cFdKcrtSmeOqTPT2kqer15a17OMH";
+const refreshToken = "I7mlcJBfemMyGTo1kYxTMMRAxySXYH"
+
+
 // tasks list for Tasks card in Dashboard view
 // data for <thead> of table in TableList view
 // data for <tbody> of table in TableList view
-export { tasks, thead, tbody };
+export { tasks, thead, tbody, accessToken, refreshToken};
