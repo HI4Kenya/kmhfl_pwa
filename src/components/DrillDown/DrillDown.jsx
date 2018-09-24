@@ -24,7 +24,7 @@ class DrillDown extends React.Component {
             wardOptions: [],
             serviceOptions: [],
             facilities: [],
-            // test: [-1.273496, 36.806646]
+            test: [-1.273496, 36.806646]
         };
     }
 
@@ -32,7 +32,7 @@ class DrillDown extends React.Component {
         //get service options
         axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer RWHcqKMg3o8zVliEuSKzUpsoaZXc6S`
+                Authorization: `Bearer nO9Gp6NcqUViUPgpXOOYF1yS9N6vUV`
             }
         }).then((response) => {
             const serviceData = response.data.results.map(response => {
@@ -64,7 +64,7 @@ class DrillDown extends React.Component {
         // get sub counties in selected county
         axios.get(`${baseURL}/common/sub_counties/?county=${selectedCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer RWHcqKMg3o8zVliEuSKzUpsoaZXc6S`
+                Authorization: `Bearer nO9Gp6NcqUViUPgpXOOYF1yS9N6vUV`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -93,7 +93,7 @@ class DrillDown extends React.Component {
         // get wards in selected sub county
         axios.get(`${baseURL}/common/wards/?sub_county=${selectedSubCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer RWHcqKMg3o8zVliEuSKzUpsoaZXc6S`
+                Authorization: `Bearer nO9Gp6NcqUViUPgpXOOYF1yS9N6vUV`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -112,7 +112,7 @@ class DrillDown extends React.Component {
         // get facilities in sub county
         axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category=${selectedService.value}&fields=lat_long&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer RWHcqKMg3o8zVliEuSKzUpsoaZXc6S`
+                Authorization: `Bearer nO9Gp6NcqUViUPgpXOOYF1yS9N6vUV`
             }
         }).then((response) => {
             const facilityData = response.data.results.map(response => {
@@ -138,7 +138,7 @@ class DrillDown extends React.Component {
         // get facilities in ward
         axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=lat_long&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer RWHcqKMg3o8zVliEuSKzUpsoaZXc6S`
+                Authorization: `Bearer nO9Gp6NcqUViUPgpXOOYF1yS9N6vUV`
             }
         }).then((response) => {
             const facilityData = response.data.results.map(response => {
@@ -163,7 +163,7 @@ class DrillDown extends React.Component {
         const { selectedService } = this.state;
         const { serviceOptions } = this.state;
         const { facilities } = this.state;
-        // const { test } = this.state;
+        const { test } = this.state;
 
         return (
             <div>
@@ -210,10 +210,10 @@ class DrillDown extends React.Component {
                     <GoogleMaps
                         apiKey={keys.mapKey}
                         style={{ height: "500px", width: "100%" }}
-                        zoom={13}
+                        zoom={11}
                         center={{ lat: -1.273496, lng: 36.806646 }}
                         // markers = {{}}                        
-                        // markers={{ lat: test[0], lng: test[1] }} //optional
+                        markers={{ lat: test[0], lng: test[1] }} //optional
 
                     />
                 </CardBody>
