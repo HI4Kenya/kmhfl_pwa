@@ -1,121 +1,178 @@
-
 import React from "react";
 import Select from "react-select";
-import 'react-dropdown/style.css';
 import axios from "axios";
-import { Card, CardHeader, CardBody, CardTitle, Table, Row, Col } from "reactstrap";
 import { PanelHeader } from "components";
+import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import ReactTable from "react-table";
-import 'react-table/react-table.css'
+import 'react-table/react-table.css';
 
-// const fetchData = require("../../api");
-const token = require('variables/keys.json');
-
-
-const options = require('variables/counties_of_Kenya.json');
-const baseURL = "http://api.kmhfltest.health.go.ke";
-const subCountyEndPoint = "common/sub_counties";
-
+// variables
+const countyData = require('variables/counties_of_Kenya.json');
+console.log(countyData.counties);
+const baseURL = "http://api.kmhfltest.health.go.ke/api"
 
 class Facilities extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            countyOptions: null,
+            selectedCounty: "",
+            selectedSubCounty: "",
+            selectedWard: "",
+            selectedService: "",
             subCountyOptions: [],
             wardOptions: [],
             serviceOptions: [],
-            tableData: []
-        }
+            facilities: []
+        };
     }
 
     componentDidMount() {
-        //get  subcounty options
-        axios.get(`${baseURL}/api/${subCountyEndPoint}/?fields=name,code,id&format=json&page_size=300`, {
-            headers:
-                { Authorization: `Bearer ${token.accessToken}` }
+        //get service options
+        axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
+            headers: {
+                Authorization: `Bearer RWHcqKMg3o8zVliEuSKzUpsoaZXc6S`
+            }
         }).then((response) => {
-            const subCountyOptions = response.data.results.map(response => {
+            const serviceData = response.data.results.map(response => {
                 return ({
                     label: `${response.name}`,
-                    value: parseInt(`${response.code}`, 10),
-                    id: `${response.id}`
+                    value: `${response.id}`,
                 })
             });
-            console.log(subCountyOptions);
-            this.setState({ subCountyOptions });
+            console.log(serviceData);
+            this.setState({ serviceOptions: serviceData });
+        }).catch((error) => {
+            console.log(error);
         })
-            .catch((error) => {
-                console.log(error);
-            })
-        //get  ward options
-        axios.get(`${baseURL}/api/common/wards/?fields=name,code&format=json&page_size=1600`, {
-            headers:
-                { Authorization: `Bearer ${token.accessToken}` }
+    }
+
+    handleServiceChange = (selectedService) => {
+        this.setState({
+            selectedService
+        });
+        console.log(`Service selected:`, selectedService);
+    }
+
+    handleCountyChange = (selectedCounty) => {
+        this.setState({
+            selectedCounty
+        });
+        console.log(`County selected:`, selectedCounty);
+
+        // get sub counties in selected county
+        axios.get(`${baseURL}/common/sub_counties/?county=${selectedCounty.value}&fields=name,id,code&format=json&page_size=300`, {
+            headers: {
+                Authorization: `Bearer RWHcqKMg3o8zVliEuSKzUpsoaZXc6S`
+            }
         }).then((response) => {
-            const wardOptions = response.data.results.map(response => {
+            const options = response.data.results.map(response => {
                 return ({
                     label: `${response.name}`,
-                    value: parseInt(`${response.code}`, 10)
+                    value: `${response.id}`,
+                    code: `${response.code}`
                 })
             });
-            console.log(wardOptions);
-            this.setState({ wardOptions });
+            console.log(options);
+            this.setState({ subCountyOptions: options });
+        }).catch((error) => {
+            console.log(error);
         })
-            .catch((error) => {
-                console.log(error);
-            })
-        //get services options
-        axios.get(`${baseURL}/api/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
-            headers:
-                { Authorization: `Bearer ${token.accessToken}` }
+    }
+
+    handleSubCountyChange = (selectedSubCounty) => {
+        this.setState({
+            selectedSubCounty
+        });
+        const selectedService = this.state.selectedService;
+        console.log(selectedService);
+        console.log(`Sub County selected:`, selectedSubCounty);
+
+
+        // get wards in selected sub county
+        axios.get(`${baseURL}/common/wards/?sub_county=${selectedSubCounty.value}&fields=name,id,code&format=json&page_size=300`, {
+            headers: {
+                Authorization: `Bearer RWHcqKMg3o8zVliEuSKzUpsoaZXc6S`
+            }
         }).then((response) => {
-            const serviceOptions = response.data.results.map(response => {
+            const options = response.data.results.map(response => {
                 return ({
                     label: `${response.name}`,
-                    value: `${response.id}`
+                    value: `${response.id}`,
+                    code: `${response.code}`
                 })
             });
-            console.log(serviceOptions);
-            this.setState({ serviceOptions });
+            console.log(options);
+            this.setState({ wardOptions: options });
+        }).catch((error) => {
+            console.log(error);
         })
-            .catch((error) => {
-                console.log(error);
-            })
-        //get search results
 
-    }
-
-    handleFilterChange = (tableData) => {
-        this.setState({ tableData });
-    }
-
-    handleCountyChange = (countyOptions) => {
-        this.setState({ countyOptions });
-        console.log(`County selected:`, countyOptions);
-    }
-    handleSubCountyChange = (subCountyOptions) => {
-        console.log(subCountyOptions);
-        this.setState({ subCountyOptions });
-        console.log(`Sub-County selected:`, subCountyOptions);
-    }
-    handleWardChange = (wardOptions) => {
-        this.setState({ wardOptions });
-        console.log(`Ward selected:`, wardOptions);
-    }
-    handleServiceChange = (serviceOptions) => {
-        this.setState({ serviceOptions });
-        console.log(`Ward selected:`, serviceOptions);
+        // get facilities in sub county
+        axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category=${selectedService.value}&fields=code,official_name,sub_county_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
+            headers: {
+                Authorization: `Bearer RWHcqKMg3o8zVliEuSKzUpsoaZXc6S`
+            }
+        }).then((response) => {
+            const facilityData = response.data.results.map(response => {
+                return ({
+                    code: `${response.code}`,
+                    facilityName: <a className="title" href="">{response.official_name}</a>,
+                    location: `${response.sub_county_name}`,
+                    type: `${response.facility_type_parent}`,
+                    status: `${response.operation_status_name}`,
+                    beds: `${response.number_of_beds}`,
+                    cots: `${response.number_of_cots}`,
+                })
+            });
+            console.log(facilityData);
+            this.setState({ facilities: facilityData });
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
+    handleWardChange = (selectedWard) => {
+        this.setState({
+            selectedWard
+        });
+        const selectedService = this.state.selectedService;
+        console.log(selectedService);
+        console.log(`Ward selected:`, selectedWard);
+
+        // get facilities in ward
+        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=official_name,ward_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
+            headers: {
+                Authorization: `Bearer RWHcqKMg3o8zVliEuSKzUpsoaZXc6S`
+            }
+        }).then((response) => {
+            const facilityData = response.data.results.map(response => {
+                return ({
+                    code: `${response.code}`,
+                    facilityName: <a className="title" href="">{response.official_name}</a>,
+                    location: `${response.ward_name}`,
+                    type: `${response.facility_type_parent}`,
+                    status: `${response.operation_status_name}`,
+                    beds: `${response.number_of_beds}`,
+                    cots: `${response.number_of_cots}`
+                })
+            });
+            console.log(facilityData);
+            this.setState({ facilities: facilityData });
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
 
     render() {
-        const { countyOptions } = this.state;
+        const { selectedCounty } = this.state;
+        const { selectedSubCounty } = this.state;
         const { subCountyOptions } = this.state;
+        const { selectedWard } = this.state;
         const { wardOptions } = this.state;
+        const { selectedService } = this.state;
         const { serviceOptions } = this.state;
-        const { tableData } = this.setState;
+        const { facilities } = this.state;
+
         return (
             <div>
                 <PanelHeader size="sm" />
@@ -127,72 +184,65 @@ class Facilities extends React.Component {
                                     <CardTitle tag="h4">Registered Facilities</CardTitle>
                                     <Row>
                                         <Col xs={12} md={3}>
+                                            {/* service options dropdown */}
                                             <Select
-                                                value={countyOptions}
-                                                onChange={this.handleCountyChange}
-                                                options={options.counties}
-                                                placeholder="Select County"
-                                            />
-                                        </Col>
-                                        <p></p>
-                                        <Col xs={12} md={3}>
-                                            <Select
-                                                onChange={this.handleSubCountyChange}
-                                                options={subCountyOptions}
-                                                placeholder="Select Sub-County"
-                                            />
-                                        </Col>
-                                        <p></p>
-                                        <Col xs={12} md={3}>
-                                            <Select
-                                                onChange={this.handleWardChange}
-                                                options={wardOptions}
-                                                placeholder="Select Ward"
-                                            />
-                                        </Col>
-                                        <Col xs={12} md={3}>
-                                            <Select
-                                                isDIsabled={true}
-                                                onChange={this.handleServiceChange}
+                                                value={selectedService}
                                                 options={serviceOptions}
-                                                placeholder="Select Service"
+                                                onChange={this.handleServiceChange}
+                                                placeholder="Service"
+                                            />
+                                        </Col>
+                                        <Col xs={12} md={3}>
+                                            {/* county options dropdown */}
+                                            <Select
+                                                value={selectedCounty}
+                                                options={countyData.counties}
+                                                onChange={this.handleCountyChange}
+                                                placeholder="County"
+                                            />
+                                        </Col>
+                                        <Col xs={12} md={3}>
+                                            {/* sub county options dropdown */}
+                                            <Select
+                                                value={selectedSubCounty}
+                                                options={subCountyOptions}
+                                                onChange={this.handleSubCountyChange}
+                                                placeholder="Sub County"
+                                            />
+                                        </Col>
+                                        <Col xs={12} md={3}>
+                                            {/* ward options dropdown */}
+                                            <Select
+                                                value={selectedWard}
+                                                options={wardOptions}
+                                                onChange={this.handleWardChange}
+                                                placeholder="Ward"
                                             />
                                         </Col>
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
-                                    <ReactTable                                        
-                                        onFetchData={(state, instance) => {
-                                            const selectedSubCounty = "70d7bb84-cee4-411a-800e-d134bded1234";
-                                            this.setState({ loading: true })
-                                            axios.get(`${baseURL}/api/facilities/facilities/?sub_county=${selectedSubCounty}&fields=official_name,county_name,facility_type_name&format=json&page_size=12000`, {
-                                                headers:
-                                                    { Authorization: `Bearer ${token.accessToken}` }
-                                            }).then((response) => {
-                                                const tableData = response.data.results.map(response => {
-                                                    return ({
-                                                        facilityName: `${response.official_name}`,
-                                                        location: `${response.county_name}`,
-                                                        type: `${response.facility_type_name}`
-                                                    })
-                                                });
-                                                console.log(tableData);
-                                                this.setState({ tableData });
-                                            })
-                                                .catch((error) => {
-                                                    console.log(error);
-                                                })
-                                        }}
-                                        data={this.state.tableData}
+                                    {/* search results table */}
+                                    <ReactTable
+                                        data={facilities}
                                         columns={[{
+                                            Header: 'Code',
+                                            accessor: 'code'
+                                        }, {
                                             Header: 'Facility Name',
-                                            accessor: 'facilityName' // String-based value accessors!
+                                            accessor: 'facilityName'
                                         }, {
-                                            Header: 'Location',
-                                            accessor: 'location',
-                                        }, {
-                                            Header: 'Type',
+                                            Header: 'Facility Type',
                                             accessor: 'type'
+                                        }, {
+                                            Header: 'Operation Status',
+                                            accessor: 'status',
+                                        }, {
+                                            Header: 'Number of Beds',
+                                            accessor: 'beds',
+                                        }, {
+                                            Header: 'Number of Cots',
+                                            accessor: 'cots',
                                         }
                                         ]}
                                     />
