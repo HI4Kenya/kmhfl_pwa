@@ -47,7 +47,7 @@ export default class FacilityMap extends Component {
   }
 }
 componentDidMount(){
-     fetch(`${baseURL}/api/${FacilityEndPoint}/?fields=lat_long&format=json&limit=300`,{
+     fetch(`${baseURL}/api/${FacilityEndPoint}/?fields=id,lat_long&format=json&limit=300`,{
      headers:
      { Authorization: `Bearer ${token.accessToken}` }})
    .then((response)=> {console.log(response);
