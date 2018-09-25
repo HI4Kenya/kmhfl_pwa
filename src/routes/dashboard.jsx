@@ -4,7 +4,7 @@ import Facilities from "views/Facilities/Facilities.jsx";
 // import Icons from "views/Icons/Icons.jsx";
 // import Typography from "views/Typography/Typography.jsx";
 // import TableList from "views/TableList/TableList.jsx";
-import Maps from "views/Maps/Maps.jsx";
+import Maps from "views/Maps/Maps.js";
 // import Upgrade from "views/Upgrade/Upgrade.jsx";
 // import UserPage from "views/UserPage/UserPage.jsx";
 
