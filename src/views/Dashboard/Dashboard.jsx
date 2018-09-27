@@ -221,11 +221,7 @@ class Dashboard extends React.Component {
                     Click on this button to find facilities that offer Laboratory services near your location.
 
               </p>
-                  <button>Facilities near me</button>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+
 
           <Row>
             {/* <Col xs={12} md={4}>
