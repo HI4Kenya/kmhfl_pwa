@@ -12,6 +12,7 @@ import {
 } from "react-google-maps";
 
 import { PanelHeader } from "components";
+import { array } from "prop-types";
 var map;
 var geocoder;
 
@@ -54,7 +55,7 @@ export default class FullScreenMap extends React.Component {
         this.state = {
             markers: [],
             formValue:"",
-            isReady:false,  //create isReady on the state
+            
         }
        /* this.handleMapClick=this.handleMapClick.bind(this);*/
         this.handleMarkerClick=this.handleMarkerClick.bind(this);
@@ -71,20 +72,24 @@ export default class FullScreenMap extends React.Component {
               { Authorization: `Bearer ${token.accessToken}` }
       }).then(response=> {
         const markerData= response.data.results;
-        console.log("results",response.data)
+        console.log("results",response.data.results)
+        this.setState({markerObject:markerData[0]});
+        const nextMarkers= markerData.map(markerObject=>{
+          const latlng={lat:Number(markerObject.lat_long[0]),lng:Number(markerObject.lat_long[1])}
         
-        const nextMarkers= markerData.map(markerData=>{
-          const latlng={lat:Number(markerData.lat_long[0]),lng:Number(markerData.lat_long[1])}
+         
           return{
-            id:markerData.id,
+            id:markerObject.id,
             position:latlng
           }
+         
         })
+        console.log("nextmarkers",nextMarkers)
         this.setState({
           markers:nextMarkers
         })
-
         })
+        
       }
      
 
@@ -95,7 +100,7 @@ export default class FullScreenMap extends React.Component {
     handleMarkerRightClick(targetMarker){
       const nextMarkers=this.state.markers.filter(marker => marker !==targetMarker);
       this.setState({
-        markers:nextMarkers,
+        markers:nextMarkers[1]
       }); 
     }
     handleMarkerClick(targetMarker){
@@ -138,8 +143,6 @@ handleClick= (marker, event)=>{
 }}*/
 
 render() {
- /*const {isReady}=this.state;
-  if(isReady)*/
    return (
                 <div>
                 <PanelHeader size="sm" />
