@@ -1,4 +1,13 @@
 import React from "react";
+import maternity from "maternity1.png";
+import pharmacy from "pharmacy.png";
+import emergency from "acc&ambulance.jpeg";
+import radiology from "radiology.jpeg";
+import dental from "dental.png";
+import vct from "vct.jpeg";
+import ENT from "ENT.png";
+import laboratory from "laboratory.jpeg";
+
 import {
   Card,
   CardHeader,
@@ -28,6 +37,9 @@ import {
   dashboard24HoursPerformanceChart
 } from "variables/charts.jsx";
 
+
+
+
 // import { tasks } from "variables/general.jsx";
 
 class Dashboard extends React.Component {
@@ -46,67 +58,171 @@ class Dashboard extends React.Component {
           }
         />
         <div className="content">
-        <Row>
-          <Col xs = {12} md = {3} >
-          <Card >
-            <CardHeader>
-              <CardTitle>Maternity</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <p>
-                Clicking on this button redirects you to facilities that offer maternity services near your location.
-                You may be prompted to provide location information.
+          <Row>
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>
+                    <div className="logo-img">
+                      <img src={maternity} alt="maternity1.png" />
+                    </div>
+                  </CardTitle>
+                  Maternity
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Click on this button to find facilities that offer maternity services near your location.
+                      You may be prompted to provide location information.
               </p>
-              <button>Facilities near me</button>
-            </CardBody>
-          </Card>
-          </Col>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
 
-          <Col xs = {12} md = {3} >
-          <Card >
-            <CardHeader>
-              <CardTitle>Emergency</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <p>
-                Clicking on this button redirects you to facilities that offer maternity services near your location.
-                You may be prompted to provide location information.
-              </p>
-              <button>Facilities near me</button>
-            </CardBody>
-          </Card>
-          </Col>
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>
+                    <div className="logo-img">
+                      <img src={emergency} alt="acc&ambulance.jpeg" />
+                    </div>
 
-          <Col xs = {12} md = {3} >
-          <Card >
-            <CardHeader>
-              <CardTitle>Pharmacy</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <p>
-                Clicking on this button redirects you to facilities that offer maternity services near your location.
-                You may be prompted to provide location information.
+                  </CardTitle>
+                  Accident & Emergency
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Click on this button to find facilities that offer emerency services near your location.
+                      You may be prompted to provide location information.
               </p>
-              <button>Facilities near me</button>
-            </CardBody>
-          </Card>
-          </Col>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
 
-          <Col xs = {12} md = {3} >
-          <Card >
-            <CardHeader>
-              <CardTitle>VCT</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <p>
-                Clicking on this button redirects you to facilities that offer maternity services near your location.
-                You may be prompted to provide location information.
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>
+                    <div className="logo-img">
+                      <img src={pharmacy} alt="pharmacy.png" />
+                    </div>
+                  </CardTitle>
+                  Pharmacy
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Click on this button to find facilities that offer phamarcy services near your location.
+                      You may be prompted to provide location information.
               </p>
-              <button>Facilities near me</button>
-            </CardBody>
-          </Card>
-          </Col>
-        </Row>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
+
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>
+                    <div className="logo-img">
+                      <img src={vct} alt="vct.jpeg" />
+                    </div>
+                  </CardTitle>
+                  VCT
+
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Click on this button to find facilities that offer VCT services near your location.
+                      You may be prompted to provide location information.
+                  </p>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>
+                    <div className="logo-img">
+                      <img src={ENT} alt="ENT.png" />
+                    </div>
+                  </CardTitle>
+                  Ear, Nose, Throat
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Click on this button to find facilities that offer ENT services near your location.
+                      You may be prompted to provide location information.
+              </p>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
+
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>
+                    <div className="logo-img">
+                      <img src={dental} alt="dental.png" />
+                    </div>
+                  </CardTitle>
+                  Dental
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Click on this button to find facilities that offer Dental services near your location.
+                      You may be prompted to provide location information.
+              </p>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
+
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>
+                    <div className="logo-img">
+                      <img src={radiology} alt="radiology.jpeg" />
+                    </div>
+                  </CardTitle>
+                  Radiology
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Click on this button to find facilities that offer Radiology services near your location.
+                      You may be prompted to provide location information.
+              </p>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
+
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>
+                    <div className="logo-img">
+                      <img src={laboratory} alt="laboratory.jpeg" />
+                    </div>
+                  </CardTitle>
+                  Laboratory
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Click on this button to find facilities that offer Laboratory services near your location.
+                      You may be prompted to provide location information.
+              </p>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+
           <Row>
             {/* <Col xs={12} md={4}>
               <Card className="card-chart">
