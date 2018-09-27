@@ -5,8 +5,9 @@ import emergency from "emergency.png";
 import radiology from "radiology.jpeg";
 import dental from "dental.png";
 import vct from "hiv.jpeg";
-import ENT from "ENT.png";
+import ENT from "ENT2.png";
 import laboratory from "lab.png";
+
 
 import {
   Card,
@@ -154,7 +155,7 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <CardTitle>
                     <div className="logo-img">
-                      <img src={ENT} alt="ENT.png" width="70" height="120" />
+                      <img src={ENT} alt="ENT2.png" width="70" height="120" />
                       ENT
                     </div>
                   </CardTitle>
