@@ -34,79 +34,69 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        <PanelHeader
-          size="lg"
-          content={
-            <div>
-              <Line
-                data={dashboardPanelChart.data}
-                options={dashboardPanelChart.options}
-              />
-            </div>
-          }
-        />
+        <PanelHeader size="sm" />
         <div className="content">
-        <Row>
-          <Col xs = {12} md = {3} >
-          <Card >
-            <CardHeader>
-              <CardTitle>Maternity</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <p>
-                Clicking on this button redirects you to facilities that offer maternity services near your location.
-                You may be prompted to provide location information.
+          <Row>
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>Maternity</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Clicking on this button redirects you to facilities that offer maternity services near your location.
+                    You may be prompted to provide location information.
               </p>
-              <button>Facilities near me</button>
-            </CardBody>
-          </Card>
-          </Col>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
 
-          <Col xs = {12} md = {3} >
-          <Card >
-            <CardHeader>
-              <CardTitle>Emergency</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <p>
-                Clicking on this button redirects you to facilities that offer maternity services near your location.
-                You may be prompted to provide location information.
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>Emergency</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Clicking on this button redirects you to facilities that offer maternity services near your location.
+                    You may be prompted to provide location information.
               </p>
-              <button>Facilities near me</button>
-            </CardBody>
-          </Card>
-          </Col>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
 
-          <Col xs = {12} md = {3} >
-          <Card >
-            <CardHeader>
-              <CardTitle>Pharmacy</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <p>
-                Clicking on this button redirects you to facilities that offer maternity services near your location.
-                You may be prompted to provide location information.
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>Pharmacy</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Clicking on this button redirects you to facilities that offer maternity services near your location.
+                    You may be prompted to provide location information.
               </p>
-              <button>Facilities near me</button>
-            </CardBody>
-          </Card>
-          </Col>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
 
-          <Col xs = {12} md = {3} >
-          <Card >
-            <CardHeader>
-              <CardTitle>VCT</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <p>
-                Clicking on this button redirects you to facilities that offer maternity services near your location.
-                You may be prompted to provide location information.
+            <Col xs={12} md={3} >
+              <Card >
+                <CardHeader>
+                  <CardTitle>VCT</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <p>
+                    Clicking on this button redirects you to facilities that offer maternity services near your location.
+                    You may be prompted to provide location information.
               </p>
-              <button>Facilities near me</button>
-            </CardBody>
-          </Card>
-          </Col>
-        </Row>
+                  <button>Facilities near me</button>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
           <Row>
             {/* <Col xs={12} md={4}>
               <Card className="card-chart">

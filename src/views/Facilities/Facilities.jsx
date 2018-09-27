@@ -6,6 +6,7 @@ import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import ReactTable from "react-table";
 import 'react-table/react-table.css';
 import FacilityInfo from "../../components/FacilityInfo/FacilityInfo";
+import Popup from "reactjs-popup";
 
 // variables
 const countyData = require('variables/counties_of_Kenya.json');
@@ -23,7 +24,9 @@ class Facilities extends React.Component {
             subCountyOptions: [],
             wardOptions: [],
             serviceOptions: [],
-            facilities: []
+            facilities: [],
+            facilityId: [],
+            hidden: false
         };
     }
 
@@ -31,7 +34,7 @@ class Facilities extends React.Component {
         //get service options
         axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer nO9Gp6NcqUViUPgpXOOYF1yS9N6vUV`
+                Authorization: `Bearer DACiEnhcfyygjJ1273J4AWvgnEAw24`
             }
         }).then((response) => {
             const serviceData = response.data.results.map(response => {
@@ -45,10 +48,6 @@ class Facilities extends React.Component {
         }).catch((error) => {
             console.log(error);
         })
-    }
-
-    submitFacilityDetails = (name) => {
-        console.log(name);  
     }
 
     handleServiceChange = (selectedService) => {
@@ -67,7 +66,7 @@ class Facilities extends React.Component {
         // get sub counties in selected county
         axios.get(`${baseURL}/common/sub_counties/?county=${selectedCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer nO9Gp6NcqUViUPgpXOOYF1yS9N6vUV`
+                Authorization: `Bearer DACiEnhcfyygjJ1273J4AWvgnEAw24`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -96,7 +95,7 @@ class Facilities extends React.Component {
         // get wards in selected sub county
         axios.get(`${baseURL}/common/wards/?sub_county=${selectedSubCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer nO9Gp6NcqUViUPgpXOOYF1yS9N6vUV`
+                Authorization: `Bearer DACiEnhcfyygjJ1273J4AWvgnEAw24`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -113,9 +112,9 @@ class Facilities extends React.Component {
         })
 
         // get facilities in sub county
-        axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category=${selectedService.value}&fields=code,official_name,sub_county_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
+        axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category=${selectedService.value}&fields=code,official_name,id,sub_county_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer nO9Gp6NcqUViUPgpXOOYF1yS9N6vUV`
+                Authorization: `Bearer DACiEnhcfyygjJ1273J4AWvgnEAw24`
             }
         }).then((response) => {
             const facilityData = response.data.results.map(response => {
@@ -124,7 +123,7 @@ class Facilities extends React.Component {
                     location: `${response.sub_county_name}`,
                     type: `${response.facility_type_parent}`,
                     status: `${response.operation_status_name}`,
-                    info: <button>Details</button>
+                    info: <button onClick={this.submitfacilityId.bind(this, `${response.id}`)}>Details</button>
 
                 })
             });
@@ -143,13 +142,11 @@ class Facilities extends React.Component {
         console.log(selectedService);
         console.log(`Ward selected:`, selectedWard);
 
-        submitFacilityDetails = (name) => {
-            console.log(name);  
-        }
+
         // get facilities in ward
-        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=official_name,ward_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
+        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=official_name,id,ward_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer nO9Gp6NcqUViUPgpXOOYF1yS9N6vUV`
+                Authorization: `Bearer DACiEnhcfyygjJ1273J4AWvgnEAw24`
             }
         }).then((response) => {
             const facilityData = response.data.results.map(response => {
@@ -158,7 +155,13 @@ class Facilities extends React.Component {
                     location: `${response.ward_name}`,
                     type: `${response.facility_type_parent}`,
                     status: `${response.operation_status_name}`,
-                    info: <button onClick={submitFacilityDetails(`${response.official_name}`)}>Details</button>
+                    info: <button onClick={this.submitfacilityId.bind(this, `${response.id}`)}>Details</button>
+                        // <Popup
+                        //     trigger={<button className="button" >Details</button>} modal>
+                        //     <br/>
+                        //     <br/>
+                        //     <FacilityInfo facilityId={this.state.facilityId} />
+                        // </Popup>
                 })
             });
             console.log(facilityData);
@@ -168,18 +171,15 @@ class Facilities extends React.Component {
         })
     }
 
-    
+    submitfacilityId(facilityId) {
+        this.setState({
+            facilityId: facilityId
+        })
+    }
+
+
 
     render() {
-        const { selectedCounty } = this.state;
-        const { selectedSubCounty } = this.state;
-        const { subCountyOptions } = this.state;
-        const { selectedWard } = this.state;
-        const { wardOptions } = this.state;
-        const { selectedService } = this.state;
-        const { serviceOptions } = this.state;
-        const { facilities } = this.state;
-
         return (
             <div>
                 <PanelHeader size="sm" />
@@ -193,8 +193,8 @@ class Facilities extends React.Component {
                                         <Col xs={12} md={3}>
                                             {/* service options dropdown */}
                                             <Select
-                                                value={selectedService}
-                                                options={serviceOptions}
+                                                value={this.state.selectedService}
+                                                options={this.state.serviceOptions}
                                                 onChange={this.handleServiceChange}
                                                 placeholder="Service"
                                             />
@@ -202,7 +202,7 @@ class Facilities extends React.Component {
                                         <Col xs={12} md={3}>
                                             {/* county options dropdown */}
                                             <Select
-                                                value={selectedCounty}
+                                                value={this.state.selectedCounty}
                                                 options={countyData.counties}
                                                 onChange={this.handleCountyChange}
                                                 placeholder="County"
@@ -211,8 +211,8 @@ class Facilities extends React.Component {
                                         <Col xs={12} md={3}>
                                             {/* sub county options dropdown */}
                                             <Select
-                                                value={selectedSubCounty}
-                                                options={subCountyOptions}
+                                                value={this.state.selectedSubCounty}
+                                                options={this.state.subCountyOptions}
                                                 onChange={this.handleSubCountyChange}
                                                 placeholder="Sub County"
                                             />
@@ -220,8 +220,8 @@ class Facilities extends React.Component {
                                         <Col xs={12} md={3}>
                                             {/* ward options dropdown */}
                                             <Select
-                                                value={selectedWard}
-                                                options={wardOptions}
+                                                value={this.state.selectedWard}
+                                                options={this.state.wardOptions}
                                                 onChange={this.handleWardChange}
                                                 placeholder="Ward"
                                             />
@@ -231,7 +231,7 @@ class Facilities extends React.Component {
                                 <CardBody>
                                     {/* search results table */}
                                     <ReactTable
-                                        data={facilities}
+                                        data={this.state.facilities}
                                         columns={[{
                                             Header: 'Facility Name',
                                             accessor: 'facilityName'
@@ -251,8 +251,8 @@ class Facilities extends React.Component {
                             </Card>
                         </Col>
                     </Row>
-                </div>
-                <FacilityInfo facilityData={this.state.facilities} />
+                </div >
+                <FacilityInfo facilityId={this.state.facilityId} />
             </div>
         );
     }

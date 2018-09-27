@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+
 // import { Link } from "react-router-dom";
 import {
   Collapse,
@@ -104,6 +106,18 @@ class Header extends React.Component {
       this.refs.sidebarToggle.classList.toggle("toggled");
     }
   }
+  submit(event) {
+    let url = 'http://api.example.com/results?q=' + encodeURI(this.state.term) + '&json=1';
+    axios.get(url)
+      .then(response => {
+        let data = {
+          results: response.data,
+        };
+        this.setState(data);
+      })
+      .catch(error => console.log(error));
+  }
+
   render() {
     return (
       // add or remove classes depending if we are on full-screen-maps page or not
@@ -118,7 +132,7 @@ class Header extends React.Component {
           this.props.location.pathname.indexOf("full-screen-maps") !== -1
             ? "navbar-absolute fixed-top"
             : "navbar-absolute fixed-top " +
-              (this.state.color === "transparent" ? "navbar-transparent " : "")
+            (this.state.color === "transparent" ? "navbar-transparent " : "")
         }
       >
         <Container fluid>
@@ -137,62 +151,22 @@ class Header extends React.Component {
             </div>
             <NavbarBrand href="/">{this.getBrand()}</NavbarBrand>
           </div>
-          <NavbarToggler onClick={this.toggle}>
-            <span className="navbar-toggler-bar navbar-kebab" />
-            <span className="navbar-toggler-bar navbar-kebab" />
-            <span className="navbar-toggler-bar navbar-kebab" />
-          </NavbarToggler>
-          <Collapse
-            isOpen={this.state.isOpen}
-            navbar
-            className="justify-content-end"
-          >
-            <form>
-              <InputGroup className="no-border">
-                <Input placeholder="Search..." />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText>
-                    <i className="now-ui-icons ui-1_zoom-bold" />
-                  </InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </form>
-            {/* <Nav navbar>
-              <NavItem>
-                <Link to="#pablo" className="nav-link">
-                  <i className="now-ui-icons media-2_sound-wave" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </Link>
-              </NavItem>
-              <Dropdown
-                nav
-                isOpen={this.state.dropdownOpen}
-                toggle={e => this.dropdownToggle(e)}
-              >
-                <DropdownToggle caret nav>
-                  <i className="now-ui-icons location_world" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem tag="a">Action</DropdownItem>
-                  <DropdownItem tag="a">Another Action</DropdownItem>
-                  <DropdownItem tag="a">Something else here</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-              <NavItem>
-                <Link to="#pablo" className="nav-link">
-                  <i className="now-ui-icons users_single-02" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Account</span>
-                  </p>
-                </Link>
-              </NavItem>
-            </Nav> */}
-          </Collapse>
+          <form onSubmit={this.submit}>
+            <InputGroup className="no-border">
+              <Input placeholder="Search..." />
+              <InputGroupAddon addonType="append">
+                <InputGroupText>
+                  <i className="now-ui-icons ui-1_zoom-bold" />
+                </InputGroupText>
+              </InputGroupAddon>
+            </InputGroup>
+          </form>
+          {/* {this.state.results.length > 0 &&
+            <Redirect to={{
+              pathname: '/facilities',
+              state: { results: this.state.results }
+            }} />
+          } */}
         </Container>
       </Navbar>
     );
