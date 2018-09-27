@@ -46,17 +46,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        <PanelHeader
-          size="lg"
-          content={
-            <div>
-              <Line
-                data={dashboardPanelChart.data}
-                options={dashboardPanelChart.options}
-              />
-            </div>
-          }
-        />
+        <PanelHeader size="sm" />
         <div className="content">
           <Row>
             <Col xs={12} md={3} >
@@ -103,6 +93,7 @@ class Dashboard extends React.Component {
             <Col xs={12} md={3} >
               <Card >
                 <CardHeader>
+
                   <CardTitle>
                     <div className="logo-img">
                       <img src={pharmacy} alt="pharmacy.png" />
@@ -114,6 +105,7 @@ class Dashboard extends React.Component {
                   <p>
                     Click on this button to find facilities that offer phamarcy services near your location.
                       You may be prompted to provide location information.
+
               </p>
                   <button>Facilities near me</button>
                 </CardBody>
@@ -215,7 +207,7 @@ class Dashboard extends React.Component {
                 <CardBody>
                   <p>
                     Click on this button to find facilities that offer Laboratory services near your location.
-                      You may be prompted to provide location information.
+
               </p>
                   <button>Facilities near me</button>
                 </CardBody>

@@ -22,6 +22,7 @@ var dashRoutes = [
     component: Facilities
   },
   { path: "/maps", name: "Facility Locator", icon: "location_map-big", component: Maps },
+
   // { path: "/icons", name: "Icons", icon: "design_image", component: Icons },
   // {
   //   path: "/notifications",
