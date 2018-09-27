@@ -25,14 +25,15 @@ const MapWrapper = withScriptjs(
   withGoogleMap(props => (
       <GoogleMap
       ref={props.onMapLoad}
-      defaultZoom={13}
-      defaultCenter={{ lat: 0.748817, lng: -33.985428 }}
+      defaultZoom={7}
+      defaultCenter={{ lat:0.1769, lng: 37.9083 }}
       defaultOptions={{
         scrollwheel: false,
       styles:fancy}}
     >
       {props.markers.map((marker,index)=>
     <Marker
+    key={index}
     position={marker.position}
     onClick={()=> props.onMarkerClick(marker)}
     >
@@ -67,13 +68,12 @@ export default class FullScreenMap extends React.Component {
 
     componentDidMount() {
       //get  facilities options
-      axios.get(`${baseURL}/api/${FacilityEndPoint}/?fields=id,lat_long&format=json&page_size=5`, {
+      axios.get(`${baseURL}/api/${FacilityEndPoint}/?fields=id,official_name,lat_long&format=json&page_size=5`, {
           headers:
               { Authorization: `Bearer ${token.accessToken}` }
       }).then(response=> {
         const markerData= response.data.results;
         console.log("results",response.data.results)
-        this.setState({markerObject:markerData[0]});
         const nextMarkers= markerData.map(markerObject=>{
           const latlng={lat:Number(markerObject.lat_long[0]),lng:Number(markerObject.lat_long[1])}
         
