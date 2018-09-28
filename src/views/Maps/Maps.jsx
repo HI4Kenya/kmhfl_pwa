@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import {default as Component} from "react";
 import { Row, Col, Card, CardHeader, CardBody } from "reactstrap";
 // import Geocode from "react-geocode";
 // react plugin used to create google maps
@@ -12,13 +11,10 @@ import {
 } from "react-google-maps";
 
 import { PanelHeader } from "components";
-import { array } from "prop-types";
-var map;
-var geocoder;
+
 
 // const fetchData = require("../../api");
 const token = require('variables/keys.json');
-const options = require('variables/counties_of_Kenya.json');
 const baseURL = "http://api.kmhfltest.health.go.ke";
 const FacilityEndPoint = "facilities/facilities";
 const MapWrapper = withScriptjs(
@@ -40,7 +36,11 @@ const MapWrapper = withScriptjs(
     {marker.showInfo &&(
      <infoWindow onCloseClick={()=> props.onMarkerClose(marker)}>
      {
-       marker.content
+       <div id="infowindow">
+       <p>
+       {marker.content}
+       </p>
+       </div>
      } 
      </infoWindow>
      ) }
@@ -58,10 +58,11 @@ export default class FullScreenMap extends React.Component {
             formValue:"",
             
         }
-       /* this.handleMapClick=this.handleMapClick.bind(this);*/
+        
         this.handleMarkerClick=this.handleMarkerClick.bind(this);
         this.handleMarkerClose=this.handleMarkerClose.bind(this);
         this.handleChange=this.handleChange.bind(this);  
+      
              
 
     }
@@ -80,6 +81,7 @@ export default class FullScreenMap extends React.Component {
          
           return{
             id:markerObject.id,
+            content:markerObject.official_name,
             position:latlng
           }
          
@@ -122,25 +124,6 @@ export default class FullScreenMap extends React.Component {
       })
     }
   
-        /*
-         { console.log("success",response.data.results)
-          var Facilities = response.data.results.map( function(res){
-           return({
-                id: res.id,
-                lat:res.lat_long[0],
-                long: res.lat_long[1]
-            
-          })});
-          console.log("facilities",Facilities);
-          this.setState({ facilities:Facilities[0]});
-      })
-          .catch((error) => {
-              console.log(error);
-          })
-}
-handleClick= (marker, event)=>{
-    this.setState({selectedMarker:marker})
-}}*/
 
 render() {
    return (
