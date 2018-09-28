@@ -112,7 +112,7 @@ class Facilities extends React.Component {
         })
 
         // get facilities in sub county
-        axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category=${selectedService.value}&fields=code,official_name,id,sub_county_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
+        axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category_id=${selectedService.value}&fields=code,official_name,id,sub_county_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
             headers: {
                 Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
             }
@@ -144,7 +144,7 @@ class Facilities extends React.Component {
 
 
         // get facilities in ward
-        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=official_name,id,ward_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
+        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category_id=${selectedService.value}&fields=official_name,id,ward_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
             headers: {
                 Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
             }

@@ -16,7 +16,7 @@ const keys = require('variables/keys.json');
 const countyData = require('variables/counties_of_Kenya.json');
 const baseURL = "http://api.kmhfltest.health.go.ke/api"
 const googleMapURL = "https://maps.googleapis.com/maps/api/js?key=" + keys.mapKey;
-
+const navigationURL = "https://www.google.com/maps/dir/?api=1";
 
 
 class FullScreenMap extends React.Component {
@@ -36,6 +36,7 @@ class FullScreenMap extends React.Component {
             lng: 36.809113599999996,
             name: "",
         };
+        this.handleMarkerClick = this.handleMarkerClick.bind(this);
     }
 
     componentDidMount() {
@@ -146,7 +147,7 @@ class FullScreenMap extends React.Component {
 
 
         // get facilities in ward
-        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=lat_long,official_name,id&format=json&page_size=100`, {
+        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category_id=${selectedService.value}&fields=lat_long,official_name,id&format=json&page_size=100`, {
             headers: {
                 Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
             }
@@ -171,7 +172,8 @@ class FullScreenMap extends React.Component {
     }
 
     handleMarkerClick(facilityGeolocation) {
-
+        let googleMapsRedirect = `${navigationURL}/destination=${this.state.lat},${this.state.lng}`
+        window.open(googleMapsRedirect);
 
     }
 
@@ -179,7 +181,7 @@ class FullScreenMap extends React.Component {
         withGoogleMap(props => (
             <GoogleMap
                 ref={props.onMapLoad}
-                defaultZoom={10}
+                defaultZoom={11}
                 defaultCenter={{ lat: this.state.lat, lng: this.state.lng }}
                 defaultOptions={{
                     scrollwheel: false,
@@ -335,7 +337,7 @@ class FullScreenMap extends React.Component {
                                             >
                                                 <this.MapWrapper
                                                     facilitiesGeolocation={this.state.facilitiesGeolocation}
-                                                    onMapClick={this.handleMapClick}
+                                                    onMarkerClick={this.handleMarkerClick}
                                                     googleMapURL={googleMapURL}
                                                     loadingElement={<div style={{ height: `100%` }} />}
                                                     containerElement={<div style={{ height: `100%` }} />}
