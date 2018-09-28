@@ -32,8 +32,8 @@ class FullScreenMap extends React.Component {
             serviceOptions: [],
             facilitiesGeolocation: [],
             facilities: [],
-            lat: this.prevState,
-            lng: this.prevState,
+            lat: -1.2746752,
+            lng: 36.809113599999996,
             name: "",
         };
     }
