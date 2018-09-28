@@ -30,7 +30,7 @@ class FacilityInfo extends React.Component {
         if (nextProps.facilityId !== []){
             axios.get(`${baseURL}/facilities/facilities/?id=${nextProps.facilityId}&format=json&page_size=1`, {
                 headers: {
-                    Authorization: `Bearer DACiEnhcfyygjJ1273J4AWvgnEAw24`
+                    Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
                 }
             }).then((response) => {
     

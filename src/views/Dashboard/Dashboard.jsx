@@ -1,12 +1,13 @@
 import React from "react";
 import maternity from "maternity1.png";
 import pharmacy from "pharmacy.png";
-import emergency from "acc&ambulance.jpeg";
+import emergency from "pharmacy.png";
 import radiology from "radiology.jpeg";
 import dental from "dental.png";
 import vct from "vct.jpeg";
-import ENT from "ENT.png";
+import ENT from "ENT2.png";
 import laboratory from "laboratory.jpeg";
+
 
 import {
   Card,
@@ -54,10 +55,12 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <CardTitle>
                     <div className="logo-img">
-                      <img src={maternity} alt="maternity1.png" />
+                      <img src={maternity} alt="maternity1.png" width="60" height="100" />
+                      Maternity
                     </div>
+                   
                   </CardTitle>
-                  Maternity
+
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -74,11 +77,12 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <CardTitle>
                     <div className="logo-img">
-                      <img src={emergency} alt="acc&ambulance.jpeg" />
+                      <img src={emergency} alt="emergency.png" width="40" height="100" />
+                      Emergency
                     </div>
-
+                    
                   </CardTitle>
-                  Accident & Emergency
+
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -96,10 +100,12 @@ class Dashboard extends React.Component {
 
                   <CardTitle>
                     <div className="logo-img">
-                      <img src={pharmacy} alt="pharmacy.png" />
+                      <img src={pharmacy} alt="pharmacy.png" width="40" height="100" />
+                      Pharmacy
                     </div>
+                 
                   </CardTitle>
-                  Pharmacy
+
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -117,10 +123,12 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <CardTitle>
                     <div className="logo-img">
-                      <img src={vct} alt="vct.jpeg" />
+                      <img src={vct} alt="hiv.jpeg" width="70" height="120" />
+                      VCT
                     </div>
+                    
                   </CardTitle>
-                  VCT
+
 
                 </CardHeader>
                 <CardBody>
@@ -139,10 +147,11 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <CardTitle>
                     <div className="logo-img">
-                      <img src={ENT} alt="ENT.png" />
+                      <img src={ENT} alt="ENT2.png" width="70" height="120" />
+                      ENT
                     </div>
                   </CardTitle>
-                  Ear, Nose, Throat
+                  
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -159,10 +168,11 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <CardTitle>
                     <div className="logo-img">
-                      <img src={dental} alt="dental.png" />
+                      <img src={dental} alt="dental.png" width="60" height="100" />
+                         Dental
                     </div>
                   </CardTitle>
-                  Dental
+                  
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -179,10 +189,11 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <CardTitle>
                     <div className="logo-img">
-                      <img src={radiology} alt="radiology.jpeg" />
+                      <img src={radiology} alt="radiology.jpeg" width="40" height="100" />
+                         Radiology
                     </div>
                   </CardTitle>
-                  Radiology
+              
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -199,21 +210,23 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <CardTitle>
                     <div className="logo-img">
-                      <img src={laboratory} alt="laboratory.jpeg" />
+                      <img src={laboratory} alt="lab.png" width="45" height="100" />
+                      Laboratory
                     </div>
+                  
+
                   </CardTitle>
-                  Laboratory
                 </CardHeader>
                 <CardBody>
                   <p>
                     Click on this button to find facilities that offer Laboratory services near your location.
 
               </p>
-                  <button>Facilities near me</button>
-                </CardBody>
+              </CardBody>
               </Card>
-            </Col>
-          </Row>
+              </Col>
+              </Row>
+
 
           <Row>
             {/* <Col xs={12} md={4}>

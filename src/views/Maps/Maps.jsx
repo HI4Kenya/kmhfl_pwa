@@ -30,10 +30,10 @@ class FullScreenMap extends React.Component {
             subCountyOptions: [],
             wardOptions: [],
             serviceOptions: [],
-            facilitiesGeolocation: {},
+            facilitiesGeolocation: [],
             facilities: [],
-            lat: 0,
-            lng: 0,
+            lat: this.prevState,
+            lng: this.prevState,
             name: "",
         };
     }
@@ -58,7 +58,7 @@ class FullScreenMap extends React.Component {
         //get service options
         axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer DACiEnhcfyygjJ1273J4AWvgnEAw24`
+                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
             }
         }).then((response) => {
             const serviceData = response.data.results.map(response => {
@@ -90,7 +90,7 @@ class FullScreenMap extends React.Component {
         // get sub counties in selected county
         axios.get(`${baseURL}/common/sub_counties/?county=${selectedCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer DACiEnhcfyygjJ1273J4AWvgnEAw24`
+                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -119,7 +119,7 @@ class FullScreenMap extends React.Component {
         // get wards in selected sub county
         axios.get(`${baseURL}/common/wards/?sub_county=${selectedSubCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer DACiEnhcfyygjJ1273J4AWvgnEAw24`
+                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -134,23 +134,6 @@ class FullScreenMap extends React.Component {
         }).catch((error) => {
             console.log(error);
         })
-
-        // // get facilities in sub county
-        // axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category=${selectedService.value}&fields=lat_long&format=json&page_size=100`, {
-        //     headers: {
-        //         Authorization: `Bearer DACiEnhcfyygjJ1273J4AWvgnEAw24`
-        //     }
-        // }).then((response) => {
-        //     const facilityData = response.data.results.map(response => {
-        //         return ({
-        //             lat_long: response.lat_long,
-        //         })
-        //     });
-        //     console.log(facilityData);
-        //     this.setState({ facilities: facilityData });
-        // }).catch((error) => {
-        //     console.log(error);
-        // })
     }
 
     handleWardChange = (selectedWard) => {
@@ -161,26 +144,42 @@ class FullScreenMap extends React.Component {
         console.log(selectedService);
         console.log(`Ward selected:`, selectedWard);
 
+
         // get facilities in ward
-        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=lat_long,official_name&format=json&page_size=100`, {
+        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=lat_long,official_name,id&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer DACiEnhcfyygjJ1273J4AWvgnEAw24`
+                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
             }
         }).then((response) => {
-            const facilitiesGeolocation = response.data.results;
-            this.setState({
-                facilitiesGeolocation: facilitiesGeolocation[0]
+            const facilityData = response.data.results;
+            const facilitiesGeolocation = facilityData.map(marker => {
+                const markerData = { lat: Number(marker.lat_long[0]), lng: Number(marker.lat_long[1]) }
+                return {
+                    id: marker.id,
+                    name: marker.official_name,
+                    position: markerData
+                }
             })
+            this.setState({
+                facilitiesGeolocation: facilitiesGeolocation
+            })
+            console.log(facilityData)
             console.log(this.state.facilitiesGeolocation);
         }).catch((error) => {
             console.log(error);
         })
     }
 
+    handleMarkerClick(facilityGeolocation) {
+
+
+    }
+
     MapWrapper = withScriptjs(
         withGoogleMap(props => (
             <GoogleMap
-                defaultZoom={13}
+                ref={props.onMapLoad}
+                defaultZoom={10}
                 defaultCenter={{ lat: this.state.lat, lng: this.state.lng }}
                 defaultOptions={{
                     scrollwheel: false,
@@ -260,10 +259,16 @@ class FullScreenMap extends React.Component {
                     ]
                 }}
             >
-                <Marker
-                    position={{lat: this.state.facilitiesGeolocation.lat_long[0], lng: this.state.facilitiesGeolocation.lat_long[1]}}
-                    title={this.state.facilitiesGeolocation.official_name}/>
-            </GoogleMap>
+                {props.facilitiesGeolocation.map((facilitiesGeolocation) =>
+                    <Marker
+                        key={facilitiesGeolocation.id}
+                        position={facilitiesGeolocation.position}
+                        title={facilitiesGeolocation.name}
+                        onClick={() => props.onMarkerClick(facilitiesGeolocation)}
+                    >
+                    </Marker>
+                )}}
+   </GoogleMap>
         ))
     );
 
@@ -329,6 +334,8 @@ class FullScreenMap extends React.Component {
                                                 style={{ position: "relative", overflow: "hidden" }}
                                             >
                                                 <this.MapWrapper
+                                                    facilitiesGeolocation={this.state.facilitiesGeolocation}
+                                                    onMapClick={this.handleMapClick}
                                                     googleMapURL={googleMapURL}
                                                     loadingElement={<div style={{ height: `100%` }} />}
                                                     containerElement={<div style={{ height: `100%` }} />}
