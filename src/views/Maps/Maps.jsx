@@ -16,7 +16,7 @@ const keys = require('variables/keys.json');
 const countyData = require('variables/counties_of_Kenya.json');
 const baseURL = "http://api.kmhfltest.health.go.ke/api"
 const googleMapURL = "https://maps.googleapis.com/maps/api/js?key=" + keys.mapKey;
-const navigationURL = "https://www.google.com/maps/dir/?api=1";
+const navigationURL = "https://www.google.com/maps/dir/?api=1&key";
 
 
 class FullScreenMap extends React.Component {
@@ -172,7 +172,7 @@ class FullScreenMap extends React.Component {
     }
 
     handleMarkerClick(facilityGeolocation) {
-        let googleMapsRedirect = `${navigationURL}/destination=${this.state.lat},${this.state.lng}`
+        let googleMapsRedirect = `${navigationURL}=${keys.apiKey}&destination=${this.state.lat},${this.state.lng}`
         window.open(googleMapsRedirect);
 
     }
