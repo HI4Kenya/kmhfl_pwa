@@ -69,14 +69,15 @@ export default class FullScreenMap extends React.Component {
 
     componentDidMount() {
       //get  facilities options
-      axios.get(`${baseURL}/api/${FacilityEndPoint}/?fields=id,official_name,lat_long&format=json&page_size=5`, {
+      axios.get(`${baseURL}/api/${FacilityEndPoint}/?fields=id,official_name,lat_long&format=json&limit=11000`, {
           headers:
               { Authorization: `Bearer ${token.accessToken}` }
       }).then(response=> {
         const markerData= response.data.results;
         console.log("results",response.data.results)
         const nextMarkers= markerData.map(markerObject=>{
-          const latlng={lat:Number(markerObject.lat_long[0]),lng:Number(markerObject.lat_long[1])}
+          var latlng={lat:Number(markerObject.lat_long[0]),lng:Number(markerObject.lat_long[1])}
+          
         
          
           return{
@@ -84,6 +85,7 @@ export default class FullScreenMap extends React.Component {
             content:markerObject.official_name,
             position:latlng
           }
+          
          
         })
         console.log("nextmarkers",nextMarkers)
