@@ -1,375 +1,239 @@
 {
-    "counties": [{
-            "value": 1,
-            "label": "Mombasa"
-        },
-        {
-            "value": 2,
-            "label": "Kwale"
-        },
-        {
-            "value": 3,
-            "label": "Kilifi"
-        },
-        {
-            "value": 4,
-            "label": "Tana River"
-        },
-        {
-            "value": 5,
-            "label": "Lamu"
-        },
-        {
-            "value": 6,
-            "label": "Taita-Taveta"
-        },
-        {
-            "value": 7,
-            "label": "Garissa"
-        },
-        {
-            "value": 8,
-            "label": "Wajir"
-        },
-        {
-            "value": 9,
-            "label": "Mandera"
-        },
-        {
-            "value": 10,
-            "label": "Marsabit"
-        },
-        {
-            "value": 11,
-            "label": "Isiolo"
-        },
-        {
-            "value": 12,
-            "label": "Meru"
-        },
-        {
-            "value": 13,
-            "label": "Tharaka-Nithi"
-        },
-        {
-            "value": 14,
-            "label": "Embu"
-        },
-        {
-            "value": 15,
-            "label": "Kitui"
-        },
+    "counties": [
         {
-            "value": 16,
-            "label": "Machakos"
+            "value": "95b08378-362e-4bf9-ad63-d685e1287db2",
+            "label": "NAIROBI",
+            "code": 47
         },
         {
-            "value": 17,
-            "label": "Makueni"
+            "value": "bbc8803a-7d6f-411a-96f3-5f8472b40405",
+            "label": "NYAMIRA",
+            "code": 46
         },
         {
-            "value": 18,
-            "label": "Nyandarua"
+            "value": "b6b5db70-609a-4194-888d-7841e02e9045",
+            "label": "KISII",
+            "code": 45
         },
         {
-            "value": 19,
-            "label": "Nyeri"
+            "value": "6c34a4b5-af53-44f9-9c1e-17fdf438dc1f",
+            "label": "MIGORI",
+            "code": 44
         },
         {
-            "value": 20,
-            "label": "Kirinyaga"
+            "value": "3452caf6-ee29-4ac7-813e-49702fec8c41",
+            "label": "HOMA BAY",
+            "code": 43
         },
         {
-            "value": 21,
-            "label": "Murang'a"
+            "value": "6f256e8c-5d8f-4f07-89a0-81e245081030",
+            "label": "KISUMU",
+            "code": 42
         },
         {
-            "value": 22,
-            "label": "Kiambu"
+            "value": "fdde0ed3-33a8-4525-950e-41af384defb9",
+            "label": "SIAYA",
+            "code": 41
         },
         {
-            "value": 23,
-            "label": "Turkana"
+            "value": "72366abd-2797-4144-8c74-c831810ec0a2",
+            "label": "BUSIA",
+            "code": 40
         },
         {
-            "value": 24,
-            "label": "West Pokot"
+            "value": "6746a019-8f92-4883-ae6d-2e4fd83c7a4e",
+            "label": "BUNGOMA",
+            "code": 39
         },
         {
-            "value": 25,
-            "label": "Samburu"
+            "value": "44cce67d-c163-4229-ac4a-c0b418601246",
+            "label": "VIHIGA",
+            "code": 38
         },
         {
-            "value": 26,
-            "label": "Trans Nzoia"
+            "value": "ac84672f-db61-41b8-83f8-dc484060c86a",
+            "label": "KAKAMEGA",
+            "code": 37
         },
         {
-            "value": 27,
-            "label": "Uasin Gishu"
+            "value": "cea1878f-be8a-46f9-9b3b-b6089977892f",
+            "label": "BOMET",
+            "code": 36
         },
         {
-            "value": 28,
-            "label": "Elgeyo-Marakwet"
+            "value": "7a116274-e48c-4015-b763-c6443b0cdad1",
+            "label": "KERICHO",
+            "code": 35
         },
         {
-            "value": 29,
-            "label": "Nandi"
+            "value": "359719c8-25f3-49b3-8549-bd5fbb99f2c1",
+            "label": "KAJIADO",
+            "code": 34
         },
         {
-            "value": 30,
-            "label": "Baringo"
+            "value": "93b9ddc8-a4c2-4c15-8b0b-599aa10af865",
+            "label": "NAROK",
+            "code": 33
         },
-
         {
-            "value": 31,
-            "label": "Laikipia"
+            "value": "b6f366e9-3050-40ca-9643-ddc7c18ccd96",
+            "label": "NAKURU",
+            "code": 32
         },
-
         {
-            "value": 32,
-            "label": "Nakuru"
+            "value": "6c336c99-969b-4e9f-ad6b-c66f761ac9d5",
+            "label": "LAIKIPIA",
+            "code": 31
         },
-
-        {
-            "value": 33,
-            "label": "Narok"
-        },
-
-        {
-            "value": 34,
-            "label": "Kajiado"
-        },
-
-        {
-            "value": 35,
-            "label": "Kericho"
-        },
-
-        {
-            "value": 36,
-            "label": "Bomet"
-        },
-        {
-            "value": 37,
-            "label": "Kakamega"
-        },
-        {
-            "value": 38,
-            "label": "Vihiga"
-        },
-        {
-            "value": 39,
-            "label": "Bungoma"
-        },
-        {
-            "value": 40,
-            "label": "Busia"
-        },
-        {
-            "value": 41,
-            "label": "Siaya"
-        },
-        {
-            "value": 42,
-            "label": "Kisumu"
-        },
-        {
-            "value": 43,
-            "label": "Homa Bay"
-        },
-        {
-            "value": 44,
-            "label": "Migori"
-        },
-
-        {
-            "value": 45,    
-            "label": "Kisii"
-        },
-
-        {
-            "value": 46,
-            "label": "Nyamira"
-        },
-        {
-            "value": 47,
-            "label": "Nairobi"
-        }
-    ],
-    "subcounties_nairobi": [
         {
-            "label": "westlands",
-            "value": 3155
-        }, {
-            "label": "dagoretti north",
-            "value": 3154
-        }, {
-            "label": "dagoretti south",
-            "value": 3153
-        }, {
-            "label": "langata",
-            "value": 3152
-        }, {
-            "label": "kibera",
-            "value": 3151
-        }, {
-            "label": "roysambu",
-            "value": 3150
-        }, {
-            "label": "kasarani",
-            "value": 3149
-        }, {
-            "label": "ruaraka",
-            "value": 3148
-        }, {
-            "label": "embakasi south",
-            "value": 3147
-        }, {
-            "label": "embakasi north",
-            "value": 3146
-        }, {
-            "label": "embakasi central",
-            "value": 3145
-        }, {
-            "label": "embakasi east",
-            "value": 3144
-        }, {
-            "label": "embakasi west",
-            "value": 3143
-        }, {
-            "label": "makadara",
-            "value": 3142
-        }, {
-            "label": "kamukunji",
-            "value": 3141
-        }, {
-            "label": "starehe",
-            "value": 3140
-        }, {
-            "label": "mathare",
-            "value": 3139
-        }
-
-    ],
-    "wards_nairobi": [{
-            "label": "KIAMAIKO",
-            "value": 1450
+            "value": "7c942357-44a8-49c9-9ca6-8247ad903b57",
+            "label": "BARINGO",
+            "code": 30
         },
         {
-            "label": "MLANGO KUBWA",
-            "value": 1449
+            "value": "ea02a4fd-f70f-4b8b-aff2-ae7c26b136fa",
+            "label": "NANDI",
+            "code": 29
         },
         {
-            "label": "NGEI",
-            "value": 1448
+            "value": "c9001ff3-e484-45e9-930b-7657196e0556",
+            "label": "ELEGEYO-MARAKWET",
+            "code": 28
         },
         {
-            "label": "HURUMA",
-            "value": 1447
+            "value": "1283e6ea-077d-4d32-8099-6d6acb428fd1",
+            "label": "UASIN GISHU",
+            "code": 27
         },
         {
-            "label": "MABATINI",
-            "value": 1446
+            "value": "916c0672-76d9-454e-9688-1ad83b576735",
+            "label": "TRANS NZOIA",
+            "code": 26
         },
         {
-            "label": "HOSPITAL",
-            "value": 1445
+            "value": "0a629644-41eb-44b8-a004-e56f06b3c006",
+            "label": "SAMBURU",
+            "code": 25
         },
         {
-            "label": "NAIROBI SOUTH",
-            "value": 1444
+            "value": "06850fa7-fbef-47b8-abb2-4954a444e1f0",
+            "label": "WEST POKOT",
+            "code": 24
         },
         {
-            "label": "LANDIMAWE",
-            "value": 1443
+            "value": "bb728208-372a-4ed3-aa5f-c1fda14cd720",
+            "label": "TURKANA",
+            "code": 23
         },
         {
-            "label": "ZIWANI/KARIOKOR",
-            "value": 1442
+            "value": "a6b6a2f0-0a63-4f52-a764-d2cc89f338ae",
+            "label": "KIAMBU",
+            "code": 22
         },
         {
-            "label": "PANGANI",
-            "value": 1441
+            "value": "b9781c38-b053-466e-b95c-af288e27a0e6",
+            "label": "MURANG'A",
+            "code": 21
         },
         {
-            "label": "NGARA",
-            "value": 1440
+            "value": "ecbf61a6-cd6d-4806-99d8-9340572c0015",
+            "label": "KIRINYAGA",
+            "code": 20
         },
         {
-            "label": "NAIROBI CENTRAL",
-            "value": 1439
+            "value": "bc7b4277-527e-441f-ae09-7faa1e63aee0",
+            "label": "NYERI",
+            "code": 19
         },
         {
-            "label": "CALIFORNIA",
-            "value": 1438
+            "value": "1e8bc59a-6ea7-44dc-adfb-1d6cd82148bd",
+            "label": "NYANDARUA",
+            "code": 18
         },
         {
-            "label": "AIRBASE",
-            "value": 1437
+            "value": "ebf51b4b-50ad-4c3e-9cc3-fe04b7eb3b21",
+            "label": "MAKUENI",
+            "code": 17
         },
         {
-            "label": "EASTLEIGH SOUTH",
-            "value": 1436
+            "value": "25ccb6f1-5de4-4d30-bab9-84e57680cee0",
+            "label": "MACHAKOS",
+            "code": 16
         },
         {
-            "label": "EASTLEIGH NORTH",
-            "value": 1435
+            "value": "680981c1-1259-47f5-bd96-4d7496dd7752",
+            "label": "KITUI",
+            "code": 15
         },
         {
-            "label": "PUMWANI",
-            "value": 1434
+            "value": "190e7483-1e7b-439e-bf1e-6f0283739835",
+            "label": "EMBU",
+            "code": 14
         },
         {
-            "label": "MAKONGENI",
-            "value": 1433
+            "value": "2fcad323-7129-4287-ac09-694105778ae7",
+            "label": "THARAKA-NITHI",
+            "code": 13
         },
         {
-            "label": "HARAMBEE",
-            "value": 1432
+            "value": "06424b4c-1009-41ff-8053-657ba6672c1e",
+            "label": "MERU",
+            "code": 12
         },
         {
-            "label": "VIWANDANI",
-            "value": 1431
+            "value": "4569135e-9b86-4be7-ab8c-c51c683da8eb",
+            "label": "ISIOLO",
+            "code": 11
         },
         {
-            "label": "MARINGO/HAMZA",
-            "value": 1430
+            "value": "390d7dff-3d00-488b-bd19-7683b6cfc8fc",
+            "label": "MARSABIT",
+            "code": 10
         },
         {
-            "label": "KARIOBANGI SOUTH",
-            "value": 1429
+            "value": "d662c8df-7116-4116-9eee-9b09f441ebc3",
+            "label": "MANDERA",
+            "code": 9
         },
         {
-            "label": "MOWLEM",
-            "value": 1428
+            "value": "02248a65-bb51-4d11-a84c-429a74cbebb5",
+            "label": "WAJIR",
+            "code": 8
         },
         {
-            "label": "UMOJA II",
-            "value": 1427
+            "value": "4c6396a2-b23a-436a-a457-50e29a7eec6f",
+            "label": "GARISSA",
+            "code": 7
         },
         {
-            "label": "UMOJA I",
-            "value": 1426
+            "value": "0e84c595-a7ce-4565-988f-350dde993124",
+            "label": "TAITA TAVETA",
+            "code": 6
         },
         {
-            "label": "MIHANGO",
-            "value": 1425
+            "value": "b576a21c-4791-4602-87bd-86988b89b632",
+            "label": "LAMU",
+            "code": 5
         },
         {
-            "label": "UTAWALA",
-            "value": 1424
+            "value": "df1781d2-1bcb-4b9c-a3cb-f1c479a951d0",
+            "label": "TANA RIVER",
+            "code": 4
         },
         {
-            "label": "EMBAKASI",
-            "value": 1423
+            "value": "bc21f38c-a383-4eb6-b6c1-1b689f432e34",
+            "label": "KILIFI",
+            "code": 3
         },
         {
-            "label": "LOWER SAVANNAH",
-            "value": 1422
+            "value": "af8333df-6c43-490b-b178-e3486d1621b7",
+            "label": "KWALE",
+            "code": 2
         },
         {
-            "label": "UPPER SAVANNAH",
-            "value": 1421
+            "value": "440d9254-afe2-4bf1-af2a-94ebacb1ee24",
+            "label": "MOMBASA",
+            "code": 1
         }
     ]
 }
