@@ -54,7 +54,7 @@ class FullScreenMap extends React.Component {
                 }
             )
         } else {
-            error => console.log(error)
+            (error) => {console.log(error)}
         }
         //get service options
         axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
