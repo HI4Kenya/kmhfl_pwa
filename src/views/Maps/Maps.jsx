@@ -7,9 +7,10 @@ import {
     withScriptjs,
     withGoogleMap,
     GoogleMap,
-    Marker
+    Marker,
+    InfoWindow
 } from "react-google-maps";
-
+import { Button, Checkbox } from "components";
 
 // variables
 const keys = require('variables/keys.json');
@@ -266,9 +267,17 @@ class FullScreenMap extends React.Component {
                         key={facilitiesGeolocation.id}
                         position={facilitiesGeolocation.position}
                         title={facilitiesGeolocation.name}
-                        onClick={() => props.onMarkerClick(facilitiesGeolocation)}
+                        // onClick={}
                     >
+                    <InfoWindow>
+                        <div>
+                        <span className = "title">{facilitiesGeolocation.name}</span>
+                        <br/>
+                        <span><Button className = "btn-wd" onClick={() => props.onMarkerClick(facilitiesGeolocation)}>Navigate</Button></span>
+                        </div>                        
+                    </InfoWindow>
                     </Marker>
+                    
                 )}}
    </GoogleMap>
         ))
