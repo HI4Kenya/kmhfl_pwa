@@ -12,6 +12,7 @@ import Popup from "reactjs-popup";
 const countyData = require('variables/counties_of_Kenya.json');
 console.log(countyData.counties);
 const baseURL = "http://api.kmhfltest.health.go.ke/api"
+const keys = require('variables/keys.json')
 
 class Facilities extends React.Component {
     constructor(props) {
@@ -34,7 +35,7 @@ class Facilities extends React.Component {
         //get service options
         axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
+                Authorization: `Bearer ${keys.accessToken}`
             }
         }).then((response) => {
             const serviceData = response.data.results.map(response => {
@@ -66,7 +67,7 @@ class Facilities extends React.Component {
         // get sub counties in selected county
         axios.get(`${baseURL}/common/sub_counties/?county=${selectedCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
+                Authorization: `Bearer ${keys.accessToken}`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -95,7 +96,7 @@ class Facilities extends React.Component {
         // get wards in selected sub county
         axios.get(`${baseURL}/common/wards/?sub_county=${selectedSubCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
+                Authorization: `Bearer ${keys.accessToken}`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -114,7 +115,7 @@ class Facilities extends React.Component {
         // get facilities in sub county
         axios.get(`${baseURL}/facilities/facilities/?sub_county=${selectedSubCounty.value}&facility_services.category_id=${selectedService.value}&fields=code,official_name,id,sub_county_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
+                Authorization: `Bearer ${keys.accessToken}`
             }
         }).then((response) => {
             const facilityData = response.data.results.map(response => {
@@ -146,7 +147,7 @@ class Facilities extends React.Component {
         // get facilities in ward
         axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category_id=${selectedService.value}&fields=official_name,id,ward_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
+                Authorization: `Bearer ${keys.accessToken}`
             }
         }).then((response) => {
             const facilityData = response.data.results.map(response => {

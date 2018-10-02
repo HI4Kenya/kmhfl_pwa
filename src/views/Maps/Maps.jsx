@@ -59,7 +59,7 @@ class FullScreenMap extends React.Component {
         //get service options
         axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
+                Authorization: `Bearer ${keys.accessToken}`
             }
         }).then((response) => {
             const serviceData = response.data.results.map(response => {
@@ -91,7 +91,7 @@ class FullScreenMap extends React.Component {
         // get sub counties in selected county
         axios.get(`${baseURL}/common/sub_counties/?county=${selectedCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
+                Authorization: `Bearer ${keys.accessToken}`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -120,7 +120,7 @@ class FullScreenMap extends React.Component {
         // get wards in selected sub county
         axios.get(`${baseURL}/common/wards/?sub_county=${selectedSubCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
+                Authorization: `Bearer ${keys.accessToken}`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -149,7 +149,7 @@ class FullScreenMap extends React.Component {
         // get facilities in ward
         axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category_id=${selectedService.value}&fields=lat_long,official_name,id&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
+                Authorization: `Bearer ${keys.accessToken}`
             }
         }).then((response) => {
             const facilityData = response.data.results;

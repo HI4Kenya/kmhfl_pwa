@@ -1,8 +1,7 @@
 import React from "react";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import axios from "axios";
-
-
+const keys = require('variables/keys.json')
 const baseURL = "http://api.kmhfltest.health.go.ke/api"
 
 class FacilityInfo extends React.Component {
@@ -30,7 +29,7 @@ class FacilityInfo extends React.Component {
         if (nextProps.facilityId !== []){
             axios.get(`${baseURL}/facilities/facilities/?id=${nextProps.facilityId}&format=json&page_size=1`, {
                 headers: {
-                    Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
+                    Authorization: `Bearer ${keys.accessToken}`
                 }
             }).then((response) => {
     
