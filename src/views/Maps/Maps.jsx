@@ -36,8 +36,8 @@ class FullScreenMap extends React.Component {
             lat: -1.2746752,
             lng: 36.809113599999996,
             name: "",
+            isOpen: false,
         };
-        this.handleMarkerClick = this.handleMarkerClick.bind(this);
     }
 
     componentDidMount() {
@@ -55,7 +55,7 @@ class FullScreenMap extends React.Component {
                 }
             )
         } else {
-            (error) => {console.log(error)}
+            (error) => { console.log(error) }
         }
         //get service options
         axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
@@ -159,7 +159,9 @@ class FullScreenMap extends React.Component {
                 return {
                     id: marker.id,
                     name: marker.official_name,
-                    position: markerData
+                    position: markerData,
+                    lat: marker.lat_long[0],
+                    long: marker.lat_long[1]
                 }
             })
             this.setState({
@@ -172,10 +174,21 @@ class FullScreenMap extends React.Component {
         })
     }
 
-    handleMarkerClick(facilityGeolocation) {
-        let googleMapsRedirect = `${navigationURL}=${keys.apiKey}&destination=${this.state.lat},${this.state.lng}`
+    handleNavigate(lat,long) {
+        let googleMapsRedirect = `${navigationURL}=${keys.apiKey}&destination=${lat},${long}`
         window.open(googleMapsRedirect);
+    }
 
+    handleToggleOpen() {
+        this.setState({
+            isOpen: true
+        });
+    }
+
+    handleToggleClose() {
+        this.setState({
+            isOpen: false
+        });
     }
 
     MapWrapper = withScriptjs(
@@ -266,18 +279,19 @@ class FullScreenMap extends React.Component {
                     <Marker
                         key={facilitiesGeolocation.id}
                         position={facilitiesGeolocation.position}
-                        title={facilitiesGeolocation.name}
-                        // onClick={}
+                        onClick={() => props.onMarkerClick()}
                     >
-                    <InfoWindow>
-                        <div>
-                        <span className = "title">{facilitiesGeolocation.name}</span>
-                        <br/>
-                        <span><Button className = "btn-wd" onClick={() => props.onMarkerClick(facilitiesGeolocation)}>Navigate</Button></span>
-                        </div>                        
-                    </InfoWindow>
+                        {this.state.isOpen &&
+                            <InfoWindow onCloseClick={() => props.onCloseClick()}>
+                                <div>
+                                    <span className="title">{facilitiesGeolocation.name}</span>
+                                    <br />
+                                    <span><Button className="btn-wd" onClick={() => props.onNavigateClick(facilitiesGeolocation.lat,facilitiesGeolocation.long)}>Navigate</Button></span>
+                                </div>
+                            </InfoWindow>
+                        }
                     </Marker>
-                    
+
                 )}}
    </GoogleMap>
         ))
@@ -285,10 +299,6 @@ class FullScreenMap extends React.Component {
 
 
     render() {
-        console.log(this.state.lat)
-        console.log(this.state.lng)
-        console.log(this.state.name)
-
         return (
             <div>
                 <PanelHeader size="sm" />
@@ -346,7 +356,9 @@ class FullScreenMap extends React.Component {
                                             >
                                                 <this.MapWrapper
                                                     facilitiesGeolocation={this.state.facilitiesGeolocation}
-                                                    onMarkerClick={this.handleMarkerClick}
+                                                    onMarkerClick={this.handleToggleOpen.bind(this)}
+                                                    onNavigateClick={this.handleNavigate.bind(this)}
+                                                    onCloseClick={this.handleToggleClose.bind(this)}
                                                     googleMapURL={googleMapURL}
                                                     loadingElement={<div style={{ height: `100%` }} />}
                                                     containerElement={<div style={{ height: `100%` }} />}
