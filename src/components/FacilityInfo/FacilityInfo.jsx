@@ -26,16 +26,14 @@ class FacilityInfo extends React.Component {
     componentWillReceiveProps(nextProps) {
         //get facility data
         console.log(nextProps.facilityId)
-        if (nextProps.facilityId !== []){
+        if (nextProps.facilityId !== []) {
             axios.get(`${baseURL}/facilities/facilities/?id=${nextProps.facilityId}&format=json&page_size=1`, {
                 headers: {
                     Authorization: `Bearer ${keys.accessToken}`
                 }
             }).then((response) => {
-    
+
                 const facilities = response.data.results;
-                // console.log("fetched Data", facilities);
-                // console.log(facilities[0].official_name);
                 this.setState({
                     facilityData: facilities,
                     facilityName: facilities[0].official_name,
@@ -54,14 +52,8 @@ class FacilityInfo extends React.Component {
                 console.log(error);
             })
         }
-        
+
     }
-
-
-    // componentDidMount() {
-
-    // }
-
 
     render() {
         return (
@@ -75,7 +67,7 @@ class FacilityInfo extends React.Component {
                             </CardHeader>
                             <CardBody>
                                 <div className="title">Basic Details</div>
-                                <hr/>
+                                <hr />
                                 <Row>
                                     <Col xs={12} md={6}>
                                         Open weekends: <b>{this.state.open_weekends}</b>
@@ -98,7 +90,7 @@ class FacilityInfo extends React.Component {
                                 </Row>
                                 <hr />
                                 <div className="title">Location Details</div>
-                                <hr/>
+                                <hr />
                                 <Row>
                                     <Col>
                                         County: <b>{this.state.county_name}</b>

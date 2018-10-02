@@ -4,7 +4,7 @@ import { Nav } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
-import logo from "kenya-coat-of-arms.png";
+import logo from "../../Icons/kenya-coat-of-arms.png";
 
 var ps;
 
