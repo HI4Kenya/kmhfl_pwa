@@ -174,7 +174,7 @@ class FullScreenMap extends React.Component {
         })
     }
 
-    handleNavigate(lat,long) {
+    handleNavigate(lat, long) {
         let googleMapsRedirect = `${navigationURL}=${keys.apiKey}&destination=${lat},${long}`
         window.open(googleMapsRedirect);
     }
@@ -195,7 +195,7 @@ class FullScreenMap extends React.Component {
         withGoogleMap(props => (
             <GoogleMap
                 ref={props.onMapLoad}
-                defaultZoom={11}
+                defaultZoom={13}
                 defaultCenter={{ lat: this.state.lat, lng: this.state.lng }}
                 defaultOptions={{
                     scrollwheel: false,
@@ -286,7 +286,7 @@ class FullScreenMap extends React.Component {
                                 <div>
                                     <span className="title">{facilitiesGeolocation.name}</span>
                                     <br />
-                                    <span><Button className="btn-wd" onClick={() => props.onNavigateClick(facilitiesGeolocation.lat,facilitiesGeolocation.long)}>Navigate</Button></span>
+                                    <span><Button className="btn-wd" onClick={() => props.onNavigateClick(facilitiesGeolocation.lat, facilitiesGeolocation.long)}>Navigate</Button></span>
                                 </div>
                             </InfoWindow>
                         }
