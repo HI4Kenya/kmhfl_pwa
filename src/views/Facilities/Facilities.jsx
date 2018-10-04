@@ -6,7 +6,7 @@ import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import ReactTable from "react-table";
 import 'react-table/react-table.css';
 import FacilityInfo from "../../components/FacilityInfo/FacilityInfo";
-import Popup from "reactjs-popup";
+// import Popup from "reactjs-popup";
 
 // variables
 const countyData = require('variables/counties_of_Kenya.json');
