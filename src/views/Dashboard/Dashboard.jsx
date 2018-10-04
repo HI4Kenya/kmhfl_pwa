@@ -1,8 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
-=======
-
->>>>>>> 6eb0a3b07958e215fc547b5776316e538ab193b0
 import maternal from "../../Icons/maternal.png";
 import pharmacy from "../../Icons/pharmacy.png";
 import emergency from "../../Icons/emergency.png";
@@ -13,10 +9,6 @@ import xray from "../../Icons/xray.png";
 import lab from "../../Icons/lab.png";
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 6eb0a3b07958e215fc547b5776316e538ab193b0
 import {
   Card,
   CardHeader,
@@ -287,8 +279,4 @@ class Dashboard extends React.Component {
   }
 }
 
-<<<<<<< HEAD
 export default Dashboard;
-=======
-export default Dashboard;
->>>>>>> 6eb0a3b07958e215fc547b5776316e538ab193b0
