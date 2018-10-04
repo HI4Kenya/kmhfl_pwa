@@ -1,110 +1,23 @@
 import React from "react";
 import { Row, Col, Card, CardHeader, CardTitle, CardBody } from "reactstrap";
+import { PanelHeader } from "components";
 import Select from "react-select";
-// react plugin used to create google maps
+import axios from "axios";
 import {
     withScriptjs,
     withGoogleMap,
     GoogleMap,
-    Marker,
-    InfoWindow
+    Marker
 } from "react-google-maps";
-import { Button, Checkbox } from "components";
+
 
 // variables
 const keys = require('variables/keys.json');
 const countyData = require('variables/counties_of_Kenya.json');
 const baseURL = "http://api.kmhfltest.health.go.ke/api"
 const googleMapURL = "https://maps.googleapis.com/maps/api/js?key=" + keys.mapKey;
-const navigationURL = "https://www.google.com/maps/dir/?api=1&key";
 
-const MapWrapper = withScriptjs(
-  withGoogleMap(props => (
-    <GoogleMap
-      defaultZoom={13}
-      defaultCenter={{ lat: -1.273496, lng: 36.806646 }}
-      defaultOptions={{
-        scrollwheel: false,
-        styles: [
-          {
-            featureType: "water",
-            elementType: "geometry",
-            stylers: [{ color: "#e9e9e9" }, { lightness: 17 }]
-          },
-          {
-            featureType: "landscape",
-            elementType: "geometry",
-            stylers: [{ color: "#f5f5f5" }, { lightness: 20 }]
-          },
-          {
-            featureType: "road.highway",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#ffffff" }, { lightness: 17 }]
-          },
-          {
-            featureType: "road.highway",
-            elementType: "geometry.stroke",
-            stylers: [{ color: "#ffffff" }, { lightness: 29 }, { weight: 0.2 }]
-          },
-          {
-            featureType: "road.arterial",
-            elementType: "geometry",
-            stylers: [{ color: "#ffffff" }, { lightness: 18 }]
-          },
-          {
-            featureType: "road.local",
-            elementType: "geometry",
-            stylers: [{ color: "#ffffff" }, { lightness: 16 }]
-          },
-          {
-            featureType: "poi",
-            elementType: "geometry",
-            stylers: [{ color: "#f5f5f5" }, { lightness: 21 }]
-          },
-          {
-            featureType: "poi.park",
-            elementType: "geometry",
-            stylers: [{ color: "#dedede" }, { lightness: 21 }]
-          },
-          {
-            elementType: "labels.text.stroke",
-            stylers: [
-              { visibility: "on" },
-              { color: "#ffffff" },
-              { lightness: 16 }
-            ]
-          },
-          {
-            elementType: "labels.text.fill",
-            stylers: [
-              { saturation: 36 },
-              { color: "#333333" },
-              { lightness: 40 }
-            ]
-          },
-          { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
-          {
-            featureType: "transit",
-            elementType: "geometry",
-            stylers: [{ color: "#f2f2f2" }, { lightness: 19 }]
-          },
-          {
-            featureType: "administrative",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#fefefe" }, { lightness: 20 }]
-          },
-          {
-            featureType: "administrative",
-            elementType: "geometry.stroke",
-            stylers: [{ color: "#fefefe" }, { lightness: 17 }, { weight: 1.2 }]
-          }
-        ]
-      }}
-    >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
-    </GoogleMap>
-  ))
-);
+
 
 class FullScreenMap extends React.Component {
     constructor(props) {
@@ -122,7 +35,6 @@ class FullScreenMap extends React.Component {
             lat: -1.2746752,
             lng: 36.809113599999996,
             name: "",
-            isOpen: false,
         };
     }
 
@@ -141,12 +53,12 @@ class FullScreenMap extends React.Component {
                 }
             )
         } else {
-            (error) => { console.log(error) }
+            error => console.log(error)
         }
         //get service options
         axios.get(`${baseURL}/facilities/service_categories/?fields=name,id&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer ${keys.accessToken}`
+                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
             }
         }).then((response) => {
             const serviceData = response.data.results.map(response => {
@@ -178,7 +90,7 @@ class FullScreenMap extends React.Component {
         // get sub counties in selected county
         axios.get(`${baseURL}/common/sub_counties/?county=${selectedCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer ${keys.accessToken}`
+                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -207,7 +119,7 @@ class FullScreenMap extends React.Component {
         // get wards in selected sub county
         axios.get(`${baseURL}/common/wards/?sub_county=${selectedSubCounty.value}&fields=name,id,code&format=json&page_size=300`, {
             headers: {
-                Authorization: `Bearer ${keys.accessToken}`
+                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
             }
         }).then((response) => {
             const options = response.data.results.map(response => {
@@ -234,9 +146,9 @@ class FullScreenMap extends React.Component {
 
 
         // get facilities in ward
-        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category_id=${selectedService.value}&fields=lat_long,official_name,id&format=json&page_size=100`, {
+        axios.get(`${baseURL}/facilities/facilities/?ward=${selectedWard.value}&facility_services.category=${selectedService.value}&fields=lat_long,official_name,id&format=json&page_size=100`, {
             headers: {
-                Authorization: `Bearer ${keys.accessToken}`
+                Authorization: `Bearer MNAb2bIbXCLzjPioNAXhBDRPQjXffC`
             }
         }).then((response) => {
             const facilityData = response.data.results;
@@ -245,9 +157,7 @@ class FullScreenMap extends React.Component {
                 return {
                     id: marker.id,
                     name: marker.official_name,
-                    position: markerData,
-                    lat: marker.lat_long[0],
-                    long: marker.lat_long[1]
+                    position: markerData
                 }
             })
             this.setState({
@@ -260,28 +170,16 @@ class FullScreenMap extends React.Component {
         })
     }
 
-    handleNavigate(lat, long) {
-        let googleMapsRedirect = `${navigationURL}=${keys.apiKey}&destination=${lat},${long}`
-        window.open(googleMapsRedirect);
-    }
+    handleMarkerClick(facilityGeolocation) {
 
-    handleToggleOpen() {
-        this.setState({
-            isOpen: true
-        });
-    }
 
-    handleToggleClose() {
-        this.setState({
-            isOpen: false
-        });
     }
 
     MapWrapper = withScriptjs(
         withGoogleMap(props => (
             <GoogleMap
                 ref={props.onMapLoad}
-                defaultZoom={13}
+                defaultZoom={10}
                 defaultCenter={{ lat: this.state.lat, lng: this.state.lng }}
                 defaultOptions={{
                     scrollwheel: false,
@@ -365,19 +263,10 @@ class FullScreenMap extends React.Component {
                     <Marker
                         key={facilitiesGeolocation.id}
                         position={facilitiesGeolocation.position}
-                        onClick={() => props.onMarkerClick()}
+                        title={facilitiesGeolocation.name}
+                        onClick={() => props.onMarkerClick(facilitiesGeolocation)}
                     >
-                        {this.state.isOpen &&
-                            <InfoWindow onCloseClick={() => props.onCloseClick()}>
-                                <div>
-                                    <span className="title">{facilitiesGeolocation.name}</span>
-                                    <br />
-                                    <span><Button className="btn-wd" onClick={() => props.onNavigateClick(facilitiesGeolocation.lat, facilitiesGeolocation.long)}>Navigate</Button></span>
-                                </div>
-                            </InfoWindow>
-                        }
                     </Marker>
-
                 )}}
    </GoogleMap>
         ))
@@ -385,6 +274,10 @@ class FullScreenMap extends React.Component {
 
 
     render() {
+        console.log(this.state.lat)
+        console.log(this.state.lng)
+        console.log(this.state.name)
+
         return (
             <div>
                 <PanelHeader size="sm" />
@@ -442,9 +335,7 @@ class FullScreenMap extends React.Component {
                                             >
                                                 <this.MapWrapper
                                                     facilitiesGeolocation={this.state.facilitiesGeolocation}
-                                                    onMarkerClick={this.handleToggleOpen.bind(this)}
-                                                    onNavigateClick={this.handleNavigate.bind(this)}
-                                                    onCloseClick={this.handleToggleClose.bind(this)}
+                                                    onMapClick={this.handleMapClick}
                                                     googleMapURL={googleMapURL}
                                                     loadingElement={<div style={{ height: `100%` }} />}
                                                     containerElement={<div style={{ height: `100%` }} />}
@@ -463,7 +354,6 @@ class FullScreenMap extends React.Component {
 
         );
     }
-
 }
 
 export default FullScreenMap;
