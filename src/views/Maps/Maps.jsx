@@ -10,7 +10,7 @@ import {
     Marker,
     InfoWindow
 } from "react-google-maps";
-import { Button, Checkbox } from "components";
+import { Button } from "components";
 
 // variables
 const keys = require('variables/keys.json');
@@ -286,97 +286,99 @@ class FullScreenMap extends React.Component {
                                 <div>
                                     <span className="title">{facilitiesGeolocation.name}</span>
                                     <br />
-                                    <span><Button className="btn-wd" onClick={() => props.onNavigateClick(facilitiesGeolocation.lat, facilitiesGeolocation.long)}>Navigate</Button></span>
+                                    <Button className="btn-wd" >Details</Button>
+                                    <Button className="btn-wd" onClick={() => props.onNavigateClick(facilitiesGeolocation.lat, facilitiesGeolocation.long)}>Navigate</Button>
+                                    
                                 </div>
                             </InfoWindow>
-                        }
+                                }
                     </Marker>
 
                 )}}
    </GoogleMap>
-        ))
-    );
-
-
+                ))
+                );
+            
+            
     render() {
         return (
             <div>
-                <PanelHeader size="sm" />
-                <div className="content">
-                    <Row>
-                        <Col xs={12}>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle tag="h4">Facility Locator</CardTitle>
-                                    <div>
-                                        <Row>
-                                            <Col xs={12} md={3}>
-                                                {/* service options dropdown */}
-                                                <Select
-                                                    value={this.state.selectedService}
-                                                    options={this.state.serviceOptions}
-                                                    onChange={this.handleServiceChange}
-                                                    placeholder="Service"
-                                                />
-                                            </Col>
-                                            <Col xs={12} md={3}>
-                                                {/* county options dropdown */}
-                                                <Select
-                                                    value={this.state.selectedCounty}
-                                                    options={countyData.counties}
-                                                    onChange={this.handleCountyChange}
-                                                    placeholder="County"
-                                                />
-                                            </Col>
-                                            <Col xs={12} md={3}>
-                                                {/* sub county options dropdown */}
-                                                <Select
-                                                    value={this.state.selectedSubCounty}
-                                                    options={this.state.subCountyOptions}
-                                                    onChange={this.handleSubCountyChange}
-                                                    placeholder="Sub County"
-                                                />
-                                            </Col>
-                                            <Col xs={12} md={3}>
-                                                {/* ward options dropdown */}
-                                                <Select
-                                                    value={this.state.selectedWard}
-                                                    options={this.state.wardOptions}
-                                                    onChange={this.handleWardChange}
-                                                    placeholder="Ward"
-                                                />
-                                            </Col>
-                                        </Row>
-                                        <label>{this.state.subCountyOptions.label}</label>
-                                        <CardBody>
-                                            <div
-                                                id="map"
-                                                className="map"
-                                                style={{ position: "relative", overflow: "hidden" }}
-                                            >
-                                                <this.MapWrapper
-                                                    facilitiesGeolocation={this.state.facilitiesGeolocation}
-                                                    onMarkerClick={this.handleToggleOpen.bind(this)}
-                                                    onNavigateClick={this.handleNavigate.bind(this)}
-                                                    onCloseClick={this.handleToggleClose.bind(this)}
-                                                    googleMapURL={googleMapURL}
-                                                    loadingElement={<div style={{ height: `100%` }} />}
-                                                    containerElement={<div style={{ height: `100%` }} />}
-                                                    mapElement={<div style={{ height: `100%` }} />}
-                                                />
-                                            </div>
-                                        </CardBody>
-                                    </div>
-                                </CardHeader>
-                            </Card>
-                        </Col>
-                    </Row>
+                    <PanelHeader size="sm" />
+                    <div className="content">
+                        <Row>
+                            <Col xs={12}>
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle tag="h4">Facility Locator</CardTitle>
+                                        <div>
+                                            <Row>
+                                                <Col xs={12} md={3}>
+                                                    {/* service options dropdown */}
+                                                    <Select
+                                                        value={this.state.selectedService}
+                                                        options={this.state.serviceOptions}
+                                                        onChange={this.handleServiceChange}
+                                                        placeholder="Service"
+                                                    />
+                                                </Col>
+                                                <Col xs={12} md={3}>
+                                                    {/* county options dropdown */}
+                                                    <Select
+                                                        value={this.state.selectedCounty}
+                                                        options={countyData.counties}
+                                                        onChange={this.handleCountyChange}
+                                                        placeholder="County"
+                                                    />
+                                                </Col>
+                                                <Col xs={12} md={3}>
+                                                    {/* sub county options dropdown */}
+                                                    <Select
+                                                        value={this.state.selectedSubCounty}
+                                                        options={this.state.subCountyOptions}
+                                                        onChange={this.handleSubCountyChange}
+                                                        placeholder="Sub County"
+                                                    />
+                                                </Col>
+                                                <Col xs={12} md={3}>
+                                                    {/* ward options dropdown */}
+                                                    <Select
+                                                        value={this.state.selectedWard}
+                                                        options={this.state.wardOptions}
+                                                        onChange={this.handleWardChange}
+                                                        placeholder="Ward"
+                                                    />
+                                                </Col>
+                                            </Row>
+                                            <label>{this.state.subCountyOptions.label}</label>
+                                            <CardBody>
+                                                <div
+                                                    id="map"
+                                                    className="map"
+                                                    style={{ position: "relative", overflow: "hidden" }}
+                                                >
+                                                    <this.MapWrapper
+                                                        facilitiesGeolocation={this.state.facilitiesGeolocation}
+                                                        onMarkerClick={this.handleToggleOpen.bind(this)}
+                                                        onNavigateClick={this.handleNavigate.bind(this)}
+                                                        onCloseClick={this.handleToggleClose.bind(this)}
+                                                        googleMapURL={googleMapURL}
+                                                        loadingElement={<div style={{ height: `100%` }} />}
+                                                        containerElement={<div style={{ height: `100%` }} />}
+                                                        mapElement={<div style={{ height: `100%` }} />}
+                                                    />
+                                                </div>
+                                            </CardBody>
+                                        </div>
+                                    </CardHeader>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </div>
+
                 </div>
 
-            </div>
-
-        );
-    }
-}
-
-export default FullScreenMap;
+                );
+            }
+        }
+        
+        export default FullScreenMap;

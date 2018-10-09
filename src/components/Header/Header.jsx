@@ -149,7 +149,7 @@ class Header extends React.Component {
             </div>
             <NavbarBrand href="/">{this.getBrand()}</NavbarBrand>
           </div>
-          <form onSubmit={this.submit}>
+          {/* <form onSubmit={this.submit}>
             <InputGroup className="no-border">
               <Input placeholder="Search..." />
               <InputGroupAddon addonType="append">
@@ -158,7 +158,7 @@ class Header extends React.Component {
                 </InputGroupText>
               </InputGroupAddon>
             </InputGroup>
-          </form>
+          </form> */}
           {/* {this.state.results.length > 0 &&
             <Redirect to={{
               pathname: '/facilities',
