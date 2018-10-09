@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardText, CardBody,
+import { Card, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 
 class ServiceCard extends Component{

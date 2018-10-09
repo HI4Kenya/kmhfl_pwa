@@ -41,10 +41,6 @@ import {
 
 class Dashboard extends React.Component {
 
-  constructor(){
-    super();
-    
-  }
 
   serviceButtonHandler(serviceName) {
     console.log("Service Selected is: ",serviceName);
