@@ -125,7 +125,6 @@ class Facilities extends React.Component {
                     type: `${response.facility_type_parent}`,
                     status: `${response.operation_status_name}`,
                     info: <button onClick={this.submitfacilityId.bind(this, `${response.id}`)}>Details</button>
-
                 })
             });
             console.log(facilityData);
@@ -157,8 +156,16 @@ class Facilities extends React.Component {
                     type: `${response.facility_type_parent}`,
                     status: `${response.operation_status_name}`,
                     info: <button onClick={this.submitfacilityId.bind(this, `${response.id}`)}>Details</button>
+                    /*
+                    {close=>(
+                        <div>
+                             <FacilityInfo facilityId={this.state.facilityId} />
+                             <a className="close" onclick={close}>&times;</a>
+                        </div>
+                    )}
+                    </Popup>*/
                         // <Popup
-                        //     trigger={<button className="button" >Details</button>} modal>
+                        //      trigger={<button className="button" >Details</button>} modal>
                         //     <br/>
                         //     <br/>
                         //     <FacilityInfo facilityId={this.state.facilityId} />
@@ -175,13 +182,15 @@ class Facilities extends React.Component {
     submitfacilityId(facilityId) {
         this.setState({
             facilityId: facilityId
+
         })
-    }
+        }
 
 
 
-    render() {
-        return (
+render(){
+        return(
+            
             <div>
                 <PanelHeader size="sm" />
                 <div className="content">
@@ -191,7 +200,7 @@ class Facilities extends React.Component {
                                 <CardHeader>
                                     <CardTitle tag="h4">Registered Facilities</CardTitle>
                                     <Row>
-                                        <Col xs={12} md={3}>
+                                        <Col Expectedxs={12} md={3}>
                                             {/* service options dropdown */}
                                             <Select
                                                 value={this.state.selectedService}
@@ -252,10 +261,13 @@ class Facilities extends React.Component {
                         </Col>
                     </Row>
                 </div >
-                <FacilityInfo facilityId={this.state.facilityId} />
+               
+                 <FacilityInfo facilityId={this.state.facilityId} /> 
+
             </div>
-        );
+        
+
+        )}
     }
-}
 
 export default Facilities;

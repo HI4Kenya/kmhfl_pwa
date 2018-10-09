@@ -1,6 +1,8 @@
 import React from "react";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import axios from "axios";
+import ServiceCard from "./ServiceCard.jsx";
+
 const baseURL = "http://api.kmhfltest.health.go.ke/api"
 const token = require('variables/keys.json');
 class FacilityInfo extends React.Component {
@@ -19,8 +21,9 @@ class FacilityInfo extends React.Component {
             county_name: "",
             sub_county_name: "",
             ward_name: "",
-        };
+            Services:[]
     }
+}
     componentWillReceiveProps(nextProps) {
         //get facility data
         console.log(nextProps.facilityId)
@@ -32,8 +35,20 @@ class FacilityInfo extends React.Component {
             }).then((response) => {
     
                 const facilities = response.data.results;
+                //console.log(facilities[0].facility_services);
                 // console.log("fetched Data", facilities);
-                // console.log(facilities[0].official_name);
+                //console.log(facilities[0].facility_services);
+               const servicesdata=facilities[0].facility_services;
+                const nextServices = servicesdata.map(servicesdataObject=>{
+                   
+                    return{
+                        service_name:servicesdataObject.service_name.toString(),
+                        category_name:servicesdataObject.category_name.toString(),
+                        average_rating:servicesdataObject.average_rating.toString()
+                    }
+                })
+                console.log(nextServices)
+                
                 this.setState({
                     facilityData: facilities,
                     facilityName: facilities[0].official_name,
@@ -47,29 +62,42 @@ class FacilityInfo extends React.Component {
                     county_name: facilities[0].county_name,
                     sub_county_name: facilities[0].sub_county_name,
                     ward_name: facilities[0].ward_name,
-                });
+                    Services:nextServices
+                })
+                
+                
             }).catch((error) => {
                 console.log(error);
             })
         }
         
     }
+
     // componentDidMount() {
     // }
-    render() {
-        return (
-            <div className="content">
+render() {
+    let ServiceCards=this.state.Services.map(Service=>{
+        return(
+        <Col sm="4">
+         <ServiceCard Service={Service}/> 
+        </Col>
+        )
+    })
+       
+     return (
+            <div className="content" style={{zIndex: '10'}}> 
                 <Row>
                     <Col xs={12}>
                         <Card>
                             <CardHeader>
                                 <CardTitle tag="h4">{this.state.facilityName}</CardTitle>
-                                <hr />
+                                <hr/>
                             </CardHeader>
                             <CardBody>
                                 <div className="title">Basic Details</div>
                                 <hr/>
                                 <Row>
+                                
                                     <Col xs={12} md={6}>
                                         Open weekends: <b>{this.state.open_weekends}</b>
                                         <br />
@@ -105,6 +133,12 @@ class FacilityInfo extends React.Component {
                                         <br />
                                         <button>Find on map</button>
                                     </Col>
+                                </Row>
+                                <hr />
+                                <div className="title">Services Offered</div>
+                                <hr/>
+                                <Row>
+                                    {ServiceCards}
                                 </Row>
                             </CardBody>
                         </Card>
