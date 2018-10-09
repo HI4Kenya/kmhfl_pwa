@@ -2,11 +2,16 @@ import React from "react";
 import Select from "react-select";
 import axios from "axios";
 import { PanelHeader } from "components";
-import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
+import {
+    Card, CardHeader, CardBody, CardTitle, Row, Col, InputGroup,
+    InputGroupText,
+    InputGroupAddon,
+    Input
+} from "reactstrap";
 import ReactTable from "react-table";
 import 'react-table/react-table.css';
 import FacilityInfo from "../../components/FacilityInfo/FacilityInfo";
-import Popup from "reactjs-popup";
+// import Popup from "reactjs-popup";
 
 // variables
 const countyData = require('variables/counties_of_Kenya.json');
@@ -27,7 +32,8 @@ class Facilities extends React.Component {
             serviceOptions: [],
             facilities: [],
             facilityId: [],
-            hidden: false
+            showFacilityDetail: false,
+            showFacilitySearch: true
         };
     }
 
@@ -157,12 +163,12 @@ class Facilities extends React.Component {
                     type: `${response.facility_type_parent}`,
                     status: `${response.operation_status_name}`,
                     info: <button onClick={this.submitfacilityId.bind(this, `${response.id}`)}>Details</button>
-                        // <Popup
-                        //     trigger={<button className="button" >Details</button>} modal>
-                        //     <br/>
-                        //     <br/>
-                        //     <FacilityInfo facilityId={this.state.facilityId} />
-                        // </Popup>
+                    // <Popup
+                    //     trigger={<button className="button" >Details</button>} modal>
+                    //     <br/>
+                    //     <br/>
+                    //     <FacilityInfo facilityId={this.state.facilityId} />
+                    // </Popup>
                 })
             });
             console.log(facilityData);
@@ -174,12 +180,11 @@ class Facilities extends React.Component {
 
     submitfacilityId(facilityId) {
         this.setState({
-            facilityId: facilityId
+            facilityId: facilityId,
+            showFacilityDetail: true,
+            // showFacilitySearch: false
         })
     }
-
-
-
     render() {
         return (
             <div>
@@ -187,7 +192,7 @@ class Facilities extends React.Component {
                 <div className="content">
                     <Row>
                         <Col xs={12}>
-                            <Card>
+                            {this.state.showFacilitySearch && <Card>
                                 <CardHeader>
                                     <CardTitle tag="h4">Registered Facilities</CardTitle>
                                     <Row>
@@ -231,6 +236,16 @@ class Facilities extends React.Component {
                                 </CardHeader>
                                 <CardBody>
                                     {/* search results table */}
+                                    <form onSubmit={this.submit}>
+                                        <InputGroup className="no-border">
+                                            <Input placeholder="Search by facility name or MFL code..." />
+                                            <InputGroupAddon addonType="append">
+                                                <InputGroupText>
+                                                    <i className="now-ui-icons ui-1_zoom-bold" />
+                                                </InputGroupText>
+                                            </InputGroupAddon>
+                                        </InputGroup>
+                                    </form>
                                     <ReactTable
                                         data={this.state.facilities}
                                         columns={[{
@@ -249,11 +264,11 @@ class Facilities extends React.Component {
                                         }]}
                                     />
                                 </CardBody>
-                            </Card>
+                            </Card>}
                         </Col>
                     </Row>
                 </div >
-                <FacilityInfo facilityId={this.state.facilityId} />
+                {this.state.showFacilityDetail && <FacilityInfo facilityId={this.state.facilityId} />}
             </div>
         );
     }
