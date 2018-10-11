@@ -33,7 +33,8 @@ class Facilities extends React.Component {
             facilities: [],
             facilityId: [],
             showFacilityDetail: false,
-            showFacilitySearch: true
+            showFacilitySearch: true,
+            searchTerm: ""
         };
     }
 
@@ -185,6 +186,41 @@ class Facilities extends React.Component {
             // showFacilitySearch: false
         })
     }
+
+    submitSearch(e) {
+        //prevent page from refreshing
+        e.preventDefault();
+        let searchTerm = document.getElementById("searchTerm").value;
+        console.log(searchTerm);
+        if (searchTerm != "") {
+            axios.get(`${baseURL}/facilities/facilities/?search=${searchTerm}&fields=official_name,id,ward_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
+                headers: {
+                    Authorization: `Bearer ${keys.accessToken}`
+                }
+            }).then((response) => {
+                const facilityData = response.data.results.map(response => {
+                    return ({
+                        facilityName: `${response.official_name}`,
+                        location: `${response.ward_name}`,
+                        type: `${response.facility_type_parent}`,
+                        status: `${response.operation_status_name}`,
+                        info: <button onClick={this.submitfacilityId.bind(this, `${response.id}`)}>Details</button>
+                        // <Popup
+                        //     trigger={<button className="button" >Details</button>} modal>
+                        //     <br/>
+                        //     <br/>
+                        //     <FacilityInfo facilityId={this.state.facilityId} />
+                        // </Popup>
+                    })
+                });
+                console.log(facilityData);
+                this.setState({ facilities: facilityData });
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+    }
+
     render() {
         return (
             <div>
@@ -235,10 +271,14 @@ class Facilities extends React.Component {
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
-                                    {/* search results table */}
-                                    <form onSubmit={this.submit}>
+                                    {/* facility search input  */}
+                                    <form
+                                        autoComplete="off"
+                                        onSubmit={this.submitSearch.bind(this)}>
                                         <InputGroup className="no-border">
-                                            <Input placeholder="Search by facility name or MFL code..." />
+                                            <Input
+                                                id="searchTerm"
+                                                placeholder="Search by facility name or MFL code..." />
                                             <InputGroupAddon addonType="append">
                                                 <InputGroupText>
                                                     <i className="now-ui-icons ui-1_zoom-bold" />
@@ -246,6 +286,7 @@ class Facilities extends React.Component {
                                             </InputGroupAddon>
                                         </InputGroup>
                                     </form>
+                                    {/* search results table */}
                                     <ReactTable
                                         data={this.state.facilities}
                                         columns={[{
