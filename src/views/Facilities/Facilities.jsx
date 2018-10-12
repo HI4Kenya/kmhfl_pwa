@@ -24,9 +24,15 @@ class Facilities extends React.Component {
         super(props);
         this.state = {
             selectedCounty: "",
-            selectedSubCounty: "",
-            selectedWard: "",
-            selectedService: "",
+            selectedSubCounty: {
+                label: "",
+                value: "",
+            },
+            selectedWard: {
+                label: "",
+                value: "",
+            },
+            selectedService: {},
             subCountyOptions: [],
             wardOptions: [],
             serviceOptions: [],
@@ -34,7 +40,8 @@ class Facilities extends React.Component {
             facilityId: [],
             showFacilityDetail: false,
             showFacilitySearch: true,
-            searchTerm: ""
+            searchTerm: "",
+            tablePageSize: 10
         };
     }
 
@@ -136,6 +143,11 @@ class Facilities extends React.Component {
                 })
             });
             console.log(facilityData);
+            if (response.data.count > 10) {
+                this.setState({
+                    tablePageSize: 20
+                })
+            }
             this.setState({ facilities: facilityData });
         }).catch((error) => {
             console.log(error);
@@ -173,6 +185,11 @@ class Facilities extends React.Component {
                 })
             });
             console.log(facilityData);
+            if (response.data.count > 10) {
+                this.setState({
+                    tablePageSize: 20
+                })
+            }
             this.setState({ facilities: facilityData });
         }).catch((error) => {
             console.log(error);
@@ -191,9 +208,10 @@ class Facilities extends React.Component {
         //prevent page from refreshing
         e.preventDefault();
         let searchTerm = document.getElementById("searchTerm").value;
+        document.getElementById("searchTerm").value = "";
         console.log(searchTerm);
         if (searchTerm != "") {
-            axios.get(`${baseURL}/facilities/facilities/?search=${searchTerm}&fields=official_name,id,ward_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
+            axios.get(`${baseURL}/facilities/facilities/?search=${searchTerm}&ward=${this.state.selectedWard.value}&sub_county=${this.state.selectedSubCounty.value}&fields=official_name,id,ward_name,facility_type_parent,operation_status_name,number_of_beds,number_of_cots&format=json&page_size=100`, {
                 headers: {
                     Authorization: `Bearer ${keys.accessToken}`
                 }
@@ -214,6 +232,12 @@ class Facilities extends React.Component {
                     })
                 });
                 console.log(facilityData);
+                if (response.data.count > 10) {
+                    console.log("more than 10")
+                    this.setState({
+                        tablePageSize: 20
+                    })
+                }
                 this.setState({ facilities: facilityData });
             }).catch((error) => {
                 console.log(error);
@@ -235,7 +259,7 @@ class Facilities extends React.Component {
                                         <Col xs={12} md={3}>
                                             {/* service options dropdown */}
                                             <Select
-                                                value={this.state.selectedService}
+                                                // value={this.state.selectedService}
                                                 options={this.state.serviceOptions}
                                                 onChange={this.handleServiceChange}
                                                 placeholder="Service"
@@ -244,7 +268,7 @@ class Facilities extends React.Component {
                                         <Col xs={12} md={3}>
                                             {/* county options dropdown */}
                                             <Select
-                                                value={this.state.selectedCounty}
+                                                // value={this.state.selectedCounty}
                                                 options={countyData.counties}
                                                 onChange={this.handleCountyChange}
                                                 placeholder="County"
@@ -253,7 +277,7 @@ class Facilities extends React.Component {
                                         <Col xs={12} md={3}>
                                             {/* sub county options dropdown */}
                                             <Select
-                                                value={this.state.selectedSubCounty}
+                                                // value={this.state.selectedSubCounty}
                                                 options={this.state.subCountyOptions}
                                                 onChange={this.handleSubCountyChange}
                                                 placeholder="Sub County"
@@ -262,7 +286,7 @@ class Facilities extends React.Component {
                                         <Col xs={12} md={3}>
                                             {/* ward options dropdown */}
                                             <Select
-                                                value={this.state.selectedWard}
+                                                // value={this.state.selectedWard}
                                                 options={this.state.wardOptions}
                                                 onChange={this.handleWardChange}
                                                 placeholder="Ward"
@@ -288,12 +312,14 @@ class Facilities extends React.Component {
                                     </form>
                                     {/* search results table */}
                                     <ReactTable
+                                        defaultPageSize={this.state.tablePageSize}
                                         data={this.state.facilities}
+                                        noDataText="No facilities were found"
                                         columns={[{
-                                            Header: 'Facility Name',
+                                            Header: 'Official Name',
                                             accessor: 'facilityName'
                                         }, {
-                                            Header: 'Facility Type',
+                                            Header: 'Type',
                                             accessor: 'type'
 
                                         }, {
