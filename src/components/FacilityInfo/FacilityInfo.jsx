@@ -35,9 +35,9 @@ class FacilityInfo extends React.Component {
             }).then((response) => {
     
                 const facilities = response.data.results;
-                console.log(facilities[0].facility_services);
+                //console.log(facilities[0].facility_services);
                 // console.log("fetched Data", facilities);
-                console.log(facilities[0].facility_services);
+                //console.log(facilities[0].facility_services);
                const servicesdata=facilities[0].facility_services;
                 const nextServices = servicesdata.map(servicesdataObject=>{
                    
