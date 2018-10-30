@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Row, Col, Card, CardHeader, CardTitle, CardBody } from "reactstrap";
 import { PanelHeader } from "components";
@@ -12,6 +11,7 @@ import {
     InfoWindow
 } from "react-google-maps";
 import { Button } from "components";
+import FacilityInfo from "../../components/FacilityInfo/FacilityInfo";
 
 // variables
 const keys = require('variables/keys.json');
@@ -192,6 +192,14 @@ class FullScreenMap extends React.Component {
         });
     }
 
+    submitfacilityId(facilityId) {
+        this.setState({
+            facilityId: facilityId,
+            showFacilityDetail: true,
+            // showFacilitySearch: false
+        })
+    }
+
     MapWrapper = withScriptjs(
         withGoogleMap(props => (
             <GoogleMap
@@ -287,14 +295,13 @@ class FullScreenMap extends React.Component {
                                 <div>
                                     <span className="title">{facilitiesGeolocation.name}</span>
                                     <br />
-                                    <Button className="btn-wd" >Details</Button>
+                                    <Button className="btn-wd" onClick={this.submitfacilityId.bind(this, `${facilitiesGeolocation.id}`)} >Details</Button>
                                     <Button className="btn-wd" onClick={() => props.onNavigateClick(facilitiesGeolocation.lat, facilitiesGeolocation.long)}>Navigate</Button>
                                     
                                 </div>
                             </InfoWindow>
                                 }
                     </Marker>
-
                 )}}
    </GoogleMap>
                 ))
@@ -375,6 +382,7 @@ class FullScreenMap extends React.Component {
                             </Col>
                         </Row>
                     </div>
+                    {this.state.showFacilityDetail && <FacilityInfo facilityId={this.state.facilityId} />}
 
                 </div>
 
