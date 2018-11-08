@@ -61,11 +61,8 @@ class Dashboard extends React.Component {
                     <div className="logo-img">
                       <img src={maternal} alt="maternal.png" width="40" height="40" />
                       Maternal
-
                     </div>
-                   
                   </CardTitle>
-
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -84,7 +81,6 @@ class Dashboard extends React.Component {
                       Emergency
                        </div>
                   </CardTitle>
-
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -100,12 +96,9 @@ class Dashboard extends React.Component {
                   <CardTitle>
                     <div className="logo-img">
                       <img src={pharmacy} alt="pharmacy.png" width="40" height="40" />
-
                       Pharmacy
                     </div>
-                 
                   </CardTitle>
-
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -122,12 +115,9 @@ class Dashboard extends React.Component {
                   <CardTitle>
                     <div className="logo-img">
                       <img src={vct} alt="vct.png" width="40" height="40" />
-
                       VCT
                     </div>
-                    
                   </CardTitle>
-
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -148,7 +138,6 @@ class Dashboard extends React.Component {
                       ENT
                     </div>
                   </CardTitle>
-
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -167,7 +156,6 @@ class Dashboard extends React.Component {
                       Dental
                     </div>
                   </CardTitle>
-
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -186,7 +174,6 @@ class Dashboard extends React.Component {
                       Radiology
                     </div>
                   </CardTitle>
-
                 </CardHeader>
                 <CardBody>
                   <p>
@@ -202,11 +189,8 @@ class Dashboard extends React.Component {
                   <CardTitle>
                     <div className="logo-img">
                       <img src={lab} alt="lab.png" width="40" height="40" />
-
                       Laboratory
                     </div>
-                  
-
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -218,7 +202,6 @@ class Dashboard extends React.Component {
               </Card>
             </Col>
           </Row>
-
           <Row>
             <Col xs={12} md={12}>
               <Card className="card-chart">

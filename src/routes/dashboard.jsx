@@ -5,6 +5,7 @@ import Facilities from "views/Facilities/Facilities.jsx";
 // import Typography from "views/Typography/Typography.jsx";
 // import TableList from "views/TableList/TableList.jsx";
 import Maps from "views/Maps/Maps.jsx";
+//import FacilityInfo from "../components/FacilityInfo/FacilityInfo";
 // import Upgrade from "views/Upgrade/Upgrade.jsx";
 // import UserPage from "views/UserPage/UserPage.jsx";
 
@@ -22,7 +23,7 @@ var dashRoutes = [
     component: Facilities
   },
   { path: "/maps", name: "Facility Locator", icon: "location_map-big", component: Maps },
-  // { path: "/icons", name: "Icons", icon: "design_image", component: Icons },
+
   // {
   //   path: "/notifications",
   //   name: "Notifications",
